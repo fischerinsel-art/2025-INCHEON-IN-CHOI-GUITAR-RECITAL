@@ -2,13 +2,13 @@
 <html lang="ko">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-12146789707"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-12146789707');
-</script>
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-12146789707"></script>
+ <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'G-12146789707');
+ </script>
 
   
   <meta charset="utf-8">
@@ -125,6 +125,46 @@
 #program h2{font-size:24px;white-space:nowrap}
 @media(min-width:768px){#program h2{font-size:36px}}
 
+    /* ===== Mercer-style line-by-line reveal ===== */
+.reveal-wrap{ position: relative; isolation:isolate; }
+.reveal-bg{ position:absolute; inset:0; z-index:0; }
+.reveal-overlay{ position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.25) 40%, rgba(0,0,0,.6)); z-index:1; }
+
+.reveal-line{
+  position: relative;
+  z-index: 2;               /* 배경 위에 */
+  opacity: 0;
+  transform: translateY(28px);
+  transition: transform .8s cubic-bezier(.22,.61,.36,1), opacity .8s ease;
+  transition-delay: var(--d, 0s); /* 개별 지연 */
+  will-change: transform, opacity;
+}
+.reveal-line.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 줄별 크기(그전의 statement 스타일 대체) */
+.reveal-h1{ font-weight:700; letter-spacing:.02em; text-transform:uppercase; }
+.reveal-sub{ color:rgba(255,255,255,.92); }
+.reveal-sub2{ color:rgba(255,255,255,.8); }
+
+@media (min-width:768px){
+  .reveal-h1{ font-size:44px }
+  .reveal-sub{ font-size:18px }
+  .reveal-sub2{ font-size:18px }
+}
+@media (max-width:767px){
+  .reveal-h1{ font-size:26px }
+  .reveal-sub{ font-size:15px }
+  .reveal-sub2{ font-size:15px }
+}
+
+/* 접근성: 모션 선호 안함이면 즉시 표시 */
+@media (prefers-reduced-motion: reduce){
+  .reveal-line{ transition:none; opacity:1; transform:none }
+}
+    
   </style>
 </head>
 <body>
@@ -167,13 +207,21 @@
   </header>
 
   <!-- Statement -->
-  <section id="feature" class="text-white py-14 border-t border-white/10">
-    <div class="container mx-auto px-6 text-center max-w-3xl">
-      <h1 class="statement-h1 tracking-tight uppercase">IMMERSIVE MUSIC EXPERIENCE</h1>
-      <p class="statement-sub mt-4 text-white/90">최인이 바라본 음악적 풍경</p>
-      <p class="statement-sub mt-2 text-white/80">음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.</p>
-    </div>
-  </section>
+<section id="feature" class="text-white py-14 border-t border-white/10 relative bg-black">
+  <div class="absolute inset-0">
+    <img src="images/statement_background.jpg" alt="Statement Background"
+         class="w-full h-full object-cover opacity-30" />
+  </div>
+  <div class="relative container mx-auto px-6 text-center max-w-3xl">
+    <h1 class="statement-h1 tracking-tight uppercase fade-up">IMMERSIVE MUSIC EXPERIENCE</h1>
+    <p class="statement-sub mt-4 text-white/90 fade-up delay-1">최인이 바라본 음악적 풍경</p>
+    <p class="statement-sub mt-2 text-white/80 fade-up delay-2">
+      음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.
+    </p>
+  </div>
+</section>
+
+  
 
   <!-- Poster -->
   <section id="poster" class="bg-black py-8 border-t border-white/10">
@@ -505,6 +553,27 @@
       document.body.removeChild(ta);
     }
   </script>
+  <script>
+  // IntersectionObserver로 줄별 순차 등장
+  (function(){
+    const lines = document.querySelectorAll('#feature .reveal-line');
+    if (!('IntersectionObserver' in window) || !lines.length){
+      // 폴백: 애니메이션 없이 표시
+      lines.forEach(el => el.classList.add('show'));
+      return;
+    }
+    const io = new IntersectionObserver((entries, obs)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('show');
+          obs.unobserve(e.target); // 한 번만 실행
+        }
+      });
+    }, { threshold: 0.25 });
+    lines.forEach(el => io.observe(el));
+  })();
+</script>
+
 
 </body>
 </html>
