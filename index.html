@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FROM HERE TO EVERYWHERE — IN CHOI GUITAR RECITAL</title>
+
+  <!-- Fonts + Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FROM HERE TO EVERYWHERE — IN CHOI GUITAR RECITAL" />
+  <meta property="og:description" content="음악·영상·공간이 교차하는 순간, 몰입의 음악여행. 2025년 10월, 인천 중구문화회관." />
+  <meta property="og:image" content="images/poster.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://fischerinsel-art.github.io/2025-INCHEON-IN-CHOI-GUITAR-RECITAL/" />
+
+  <meta name="description" content="최인 기타 리사이틀 — FROM HERE TO EVERYWHERE. 몰입형 음악 경험, 인천 중구문화회관 2025년 10월." />
+  <meta name="keywords" content="최인, 기타, 리사이틀, 클래식 공연, 인천, 음악회, immersive music, recital" />
+  <meta name="author" content="FISCHERINSEL ARTS" />
+
+  <style>
+    :root{ --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif; --serif:"Libre Baskerville","Times New Roman",Times,serif; }
+    html,body{background:#000;color:#fff;font-family:var(--sans);}
+    .container{max-width:1200px;}
+    .eyebrow{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+    .soft{color:rgba(255,255,255,.58);}
+    .muted{color:rgba(255,255,255,.78);}
+    .card{border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.02);}
+    .nav{backdrop-filter:blur(10px);background:rgba(0,0,0,.45);border-bottom:1px solid rgba(255,255,255,.08);}
+    .btn3d{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:9999px;padding:10px 16px;font-size:14px;font-weight:700;color:#0b0b0b;background:linear-gradient(#fafafa,#e6e6e6);border:1px solid #d1d1d1;box-shadow:0 6px 18px rgba(0,0,0,.25), inset 0 1px 0 #fff;}
+    .btn3d:active{transform:translateY(1px); box-shadow:0 4px 10px rgba(0,0,0,.25), inset 0 1px 0 #fff;}
+    .btn3d.circle{width:44px;height:44px;padding:0;border-radius:9999px;}
+    @media (max-width:480px){ .btn3d.circle{width:38px;height:38px} .btn3d{padding:8px 14px;font-size:13px} }
+    .bars{width:20px;height:14px;position:relative}
+    .bars::before,.bars::after,.bars span{content:"";position:absolute;left:0;right:0;height:2px;background:#000;border-radius:1px}
+    .bars::before{top:0}.bars span{top:6px}.bars::after{bottom:0}
+    .menu-panel{position:fixed;top:0;left:0;height:100vh;width:min(82vw,360px);background:rgba(15,15,15,.96);border-right:1px solid rgba(255,255,255,.08);transform:translateX(-100%);transition:transform .28s ease;z-index:60;backdrop-filter:blur(6px);}
+    .menu-panel.open{transform:translateX(0)}
+    .menu-link{display:block;padding:14px 18px;font-weight:500;color:#fff;}
+    .menu-link:hover{background:rgba(255,255,255,.06);}
+    .statement-h1{font-weight:700}
+    @media (min-width:768px){.statement-h1{font-size:44px;letter-spacing:.02em}.statement-sub{font-size:18px}}
+    @media (max-width:767px){.statement-h1{font-size:26px;letter-spacing:.02em}.statement-sub{font-size:15px}}
+    .prog-card .overlay{position:absolute;inset:0;background:rgba(0,0,0,.78);color:#fff;padding:16px;opacity:0;transition:opacity .2s ease;overflow:auto;}
+    .prog-card:hover .overlay,.prog-card:focus-within .overlay{opacity:1;}
+    .prog-card .title{padding:12px 4px 10px;font-weight:600;text-align:center;}
+    .tap-hint{position:absolute;right:10px;bottom:10px;font-size:12px;color:rgba(255,255,255,.8);}
+    .artist-card{display:grid;grid-template-columns:1fr;gap:20px;align-items:start;}
+    @media(min-width:900px){.artist-card{grid-template-columns:360px 1fr}}
+    .artist-photo{aspect-ratio:3/4;object-fit:cover;width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:#111;}
+    .team-grid{display:grid;grid-template-columns:1fr;gap:8px}
+    @media(min-width:680px){.team-grid{grid-template-columns:1fr 1fr}}
+    .team-row{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}
+    .team-role{color:rgba(255,255,255,.85);font-weight:600}
+    .team-name{color:rgba(255,255,255,.85)}
+    .discount-card{padding:12px 14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);line-height:1.3;}
+    .discount-title{font-weight:800;display:flex;align-items:center;gap:8px}
+    .discount-title .icon{font-size:16px}
+    .uniform{font-size:12px;line-height:1.3;color:rgba(255,255,255,.78);}
+    .notice-list{list-style:none;padding-left:0;margin-left:0}
+    .notice-list li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    @media (max-width:700px){ .notice-list li{white-space:normal} }
+    .v-block{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px;}
+    .v-icon{width:36px;height:36px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center}
+    .v-title{font-weight:700;margin-bottom:6px}
+    .v-ul{margin:0;padding-left:16px}
+    .v-ul li{margin:6px 0}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;border:1px solid rgba(255,255,255,.3);font-size:13px;color:#fff}
+    .pill:hover{background:rgba(255,255,255,.1)}
+    #program h2{font-size:24px;white-space:nowrap}
+    @media(min-width:768px){#program h2{font-size:36px}}
+  </style>
+</head>
+
+<body>
+
+  <!-- Side Menu -->
+  <aside id="sideMenu" class="menu-panel" aria-hidden="true">
+    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+      <div class="text-xs uppercase tracking-[.18em] soft">Menu</div>
+      <button id="menuClose" class="btn3d" style="padding:6px 12px">닫기 ✕</button>
+    </div>
+    <nav class="py-2">
+      <a class="menu-link" href="#top">Top</a>
+      <a class="menu-link" href="#feature">Intro</a>
+      <a class="menu-link" href="#poster">Poster</a>
+      <a class="menu-link" href="#program">Program</a>
+      <a class="menu-link" href="#artists">Artists</a>
+      <a class="menu-link" href="#team">Creative Team</a>
+      <a class="menu-link" href="#tickets">Discount Information</a>
+      <a class="menu-link" href="#venue">Venue</a>
+      <a class="menu-link" target="_blank" href="https://mobileticket.interpark.com/goods/25013136?app_tapbar_state=hide">예매하기 →</a>
+    </nav>
+  </aside>
+
+  <!-- Top Nav -->
+  <nav class="nav fixed top-0 left-0 right-0 z-40 h-16">
+    <div class="container mx-auto h-full px-3 grid grid-cols-[auto_1fr_auto] items-center gap-2">
+      <button id="menuBtn" class="btn3d circle" aria-controls="sideMenu" aria-expanded="false" aria-label="Open menu"><span class="bars"><span></span></span></button>
+      <a href="#top" class="block text-center leading-tight justify-self-center">
+        <span class="block text-[11px] md:text-[12px] uppercase font-extrabold tracking-[.22em]">IN CHOI GUITAR RECITAL</span>
+        <span class="block text-[12px] md:text-sm uppercase font-medium tracking-[.26em]">FROM HERE TO EVERYWHERE</span>
+      </a>
+      <a href="https://mobileticket.interpark.com/goods/25013136?app_tapbar_state=hide" class="btn3d">예매</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="top" class="relative w-full h-[70vh] md:h-screen overflow-hidden">
+    <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/4tJQ3M9aYaQ?autoplay=1&mute=1&loop=1&playlist=4tJQ3M9aYaQ&controls=0&showinfo=0&modestbranding=1&rel=0" title="Hero" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/60"></div>
+  </header>
+
+  <!-- Statement -->
+  <section id="feature" class="text-white py-14 border-t border-white/10">
+    <div class="container mx-auto px-6 text-center max-w-3xl">
+      <h1 class="statement-h1 tracking-tight uppercase">IMMERSIVE MUSIC EXPERIENCE</h1>
+      <p class="statement-sub mt-4 text-white/90">최인이 바라본 음악적 풍경</p>
+      <p class="statement-sub mt-2 text-white/80">음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.</p>
+    </div>
+  </section>
+
+  <!-- Poster -->
+  <section id="poster" class="bg-black py-8 border-t border-white/10">
+    <div class="container mx-auto px-6 max-w-3xl">
+      <img src="images/poster.jpg" alt="공연 포스터" class="w-full rounded-xl border border-white/10 shadow-lg" />
+    </div>
+  </section>
+
+  <!-- Program -->
+  <section id="program" class="bg-black py-20 border-t border-white/10">
+    <div class="container mx-auto px-6">
+      <div class="flex items-end justify-between mb-10">
+        <div>
+          <div class="eyebrow mb-2">Program</div>
+          <h2 class="text-[30px] md:text-[36px] font-semibold">From Here to Everywhere</h2>
+          <p class="soft mt-1 text-sm">카드를 눌러 곡 설명을 확인하세요.</p>
+        </div>
+        <a href="https://mobileticket.interpark.com/goods/25013136?app_tapbar_state=hide" class="hidden md:inline-flex btn3d">예매</a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_forest.jpg" alt="숲" class="w-full h-64 object-cover"><div class="title">숲</div><div class="overlay"><p class="text-sm leading-7">숲의 풍경을 통해 ‘자신의 자리를 묵묵히 지켜내는 이들의 삶’을 음악으로 비춘 작품. 2022 기타 독주로 발표, 이번 무대에서는 바이올린과 이중주.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_sea_mountain.jpg" alt="바다, 산" class="w-full h-64 object-cover"><div class="title">바다, 산</div><div class="overlay"><p class="text-sm leading-7">산행의 오르막·내리막과 정상의 빛, 파도의 반복 리듬을 기타 선율로 그린 연작 ‘음악적 풍경’.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_calligraphy.jpg" alt="서(書)" class="w-full h-64 object-cover"><div class="title">서(書)</div><div class="overlay"><p class="text-sm leading-7">서예의 호흡·필선·정신을 음악으로 번역한 작품. 예술의전당 서예박물관 최치원전 리서치에서 출발.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_road.jpg" alt="가던길" class="w-full h-64 object-cover"><div class="title">가던길</div><div class="overlay"><p class="text-sm leading-7">여정의 만남과 이별, 메나리조 선율 속 피리·기타의 대화로 삶의 길을 그린 곡.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_gampo.jpg" alt="감포 앞 바다에서" class="w-full h-64 object-cover"><div class="title">감포 앞 바다에서</div><div class="overlay"><p class="text-sm leading-7">문무대왕·만파식적 설화를 모티프로 한 피리·기타 이중주. 평화와 안녕의 염원을 담았다.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_seokpoong.jpg" alt="석풍수" class="w-full h-64 object-cover"><div class="title">석풍수</div><div class="overlay"><p class="text-sm leading-7">이타미 준의 제주 건축 ‘석풍수’에서 영감을 얻은 기타 작품. 바람·돌·물의 감각을 담았다.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_prayer.jpg" alt="PRAYER" class="w-full h-64 object-cover"><div class="title">PRAYER</div><div class="overlay"><p class="text-sm leading-7">혼란한 현실 속 모두를 위한 기도. 고요한 음향 속 간절한 바람을 담다.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_island.jpg" alt="ISLAND" class="w-full h-64 object-cover"><div class="title">ISLAND</div><div class="overlay"><p class="text-sm leading-7">서해 섬 여행의 인상에서 출발. 고독과 낯섦을 넘어 아름다움을 발견하는 여정.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+        <article class="prog-card relative card overflow-hidden group"><img src="images/program_fromhere.jpg" alt="FROM HERE TO EVERYWHERE" class="w-full h-64 object-cover"><div class="title">FROM HERE TO EVERYWHERE...</div><div class="overlay"><p class="text-sm leading-7">한 송이 민들레에서 시작된 작은 소망이 세상으로 확장되는 순간을 그린 기타·바이올린 듀오.</p><span class="tap-hint">탭하여 닫기 ✕</span></div></article>
+      </div>
+      <div class="mt-12 text-center md:hidden"><a href="https://mobileticket.interpark.com/goods/25013136?app_tapbar_state=hide" class="btn3d">예매</a></div>
+    </div>
+  </section>
+
+  <!-- Artists -->
+  <section id="artists" class="bg-black py-16 border-t border-white/10">
+    <div class="container mx-auto px-6">
+      <div class="eyebrow mb-3">Artists</div>
+
+      <div class="artist-card card p-5 mb-8">
+        <img class="artist-photo" src="images/artist_inchoi.jpg" alt="최인">
+        <div>
+          <h3 class="text-2xl font-semibold mb-1">최인 <span class="soft text-base">Composer, Guitarist</span></h3>
+          <div class="mt-2 flex flex-wrap items-center gap-2">
+            <a href="https://instagram.com/inchoiguitar" target="_blank" class="pill">
+              <svg class="inline-block -mt-px" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <defs><linearGradient id="ig1" x1="0" y1="24" x2="24" y2="0"><stop stop-color="#F58529"/><stop offset="0.5" stop-color="#DD2A7B"/><stop offset="1" stop-color="#8134AF"/></linearGradient></defs>
+                <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#ig1)"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/>
+              </svg><span>@inchoiguitar</span>
+            </a>
+            <a href="https://www.inchoi.kr/" target="_blank" class="pill">🌐 <span>inchoi.kr</span></a>
+            <a href="https://youtube.com/@inchoi2014" target="_blank" class="pill">▶️ <span>@inchoi2014</span></a>
+          </div>
+          <div class="muted leading-8 text-[15px] mt-4">여기에 제공하신 소개문 전체를 그대로 삽입하세요.</div>
+        </div>
+      </div>
+
+      <div class="artist-card card p-5 mb-8">
+        <img class="artist-photo" src="images/artist_yhs.jpg" alt="유현수">
+        <div>
+          <h3 class="text-2xl font-semibold mb-1">유현수 <span class="soft text-base">피리</span></h3>
+          <div class="mt-2 flex flex-wrap items-center gap-2">
+            <a href="https://instagram.com/piri.hyunsoo_you" target="_blank" class="pill">
+              <svg class="inline-block -mt-px" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <defs><linearGradient id="ig2" x1="0" y1="24" x2="24" y2="0"><stop stop-color="#F58529"/><stop offset="0.5" stop-color="#DD2A7B"/><stop offset="1" stop-color="#8134AF"/></linearGradient></defs>
+                <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#ig2)"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/>
+              </svg><span>@piri.hyunsoo_you</span>
+            </a>
+          </div>
+          <div class="muted leading-8 text-[15px] mt-4">여기에 제공하신 소개문 전체를 그대로 삽입하세요.</div>
+        </div>
+      </div>
+
+      <div class="artist-card card p-5">
+        <img class="artist-photo" src="images/artist_jrpark.jpg" alt="박재린">
+        <div>
+          <h3 class="text-2xl font-semibold mb-1">박재린 <span class="soft text-base">Violin</span></h3>
+          <div class="mt-2 flex flex-wrap items-center gap-2">
+            <a href="https://instagram.com/jaelin.violin" target="_blank" class="pill">
+              <svg class="inline-block -mt-px" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <defs><linearGradient id="ig3" x1="0" y1="24" x2="24" y2="0"><stop stop-color="#F58529"/><stop offset="0.5" stop-color="#DD2A7B"/><stop offset="1" stop-color="#8134AF"/></linearGradient></defs>
+                <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#ig3)"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/>
+              </svg><span>@jaelin.violin</span>
+            </a>
+          </div>
+          <div class="muted leading-8 text-[15px] mt-4">여기에 제공하신 소개문 전체를 그대로 삽입하세요.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Creative Team -->
+  <section id="team" class="bg-black py-16 border-t border-white/10">
+    <div class="container mx-auto px-6">
+      <div class="eyebrow mb-3">Creative Team</div>
+      <div class="team-grid">
+        <div class="team-row"><div class="team-role">연출, 음악감독</div><div class="team-name">최인</div></div>
+        <div class="team-row"><div class="team-role">음향디자인, 음향감독</div><div class="team-name">이수용</div></div>
+        <div class="team-row"><div class="team-role">영상디자인, 영상감독</div><div class="team-name">이뿌리</div></div>
+        <div class="team-row"><div class="team-role">영상 오퍼레이팅</div><div class="team-name">이민정</div></div>
+        <div class="team-row"><div class="team-role">조명디자인, 조명감독</div><div class="team-name">최예원</div></div>
+        <div class="team-row"><div class="team-role">무대감독</div><div class="team-name">신재경</div></div>
+        <div class="team-row"><div class="team-role">조연출</div><div class="team-name">이미리</div></div>
+        <div class="team-row"><div class="team-role">영상 촬영·제작</div><div class="team-name">DAN 최영광</div></div>
+        <div class="team-row"><div class="team-role">제작·홍보</div><div class="team-name">피셔인젤 예술기획</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tickets & Discounts -->
+  <section id="tickets" class="bg-black py-16 border-t border-white/10">
+    <div class="container mx-auto px-6">
+      <h3 class="text-2xl md:text-3xl font-semibold mb-6">Tickets</h3>
+      <div class="card p-6 mb-8 flex items-center justify-between gap-4 flex-wrap">
+        <div class="soft">전석 30,000원 · NOL 티켓</div>
+        <a href="https://mobileticket.interpark.com/goods/25013136?app_tapbar_state=hide" class="btn3d">예매</a>
+      </div>
+
+      <div class="eyebrow mb-3">Discounts</div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">⏰</span>조기예매</div><span class="btn3d" style="padding:6px 10px">50%</span></div><div class="uniform">~ 2025.9.30 예매 시</div><div class="uniform mt-1">증빙: NOL 티켓예매</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">🧑‍🎓</span>청소년</div><span class="btn3d" style="padding:6px 10px">50%</span></div><div class="uniform">만 24세 이하</div><div class="uniform mt-1">증빙: 신분증/학생증</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">♿</span>장애인</div><span class="btn3d" style="padding:6px 10px">50%</span></div><div class="uniform">등록 장애인 (보호자 1인 포함 가능)</div><div class="uniform mt-1">증빙: 장애인등록증</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">🎖️</span>국가유공자</div><span class="btn3d" style="padding:6px 10px">50%</span></div><div class="uniform">국가유공자 및 유족</div><div class="uniform mt-1">증빙: 유공자증/유족증</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">👵</span>경로우대</div><span class="btn3d" style="padding:6px 10px">50%</span></div><div class="uniform">65세 이상</div><div class="uniform mt-1">증빙: 신분증</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">🤝</span>저소득층</div><span class="btn3d" style="padding:6px 10px">50%</span></div><div class="uniform">국민기초생활보장법 수급자</div><div class="uniform mt-1">증빙: 수급자증명서</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">👨‍👩‍👧‍👦</span>다둥이</div><span class="btn3d" style="padding:6px 10px">50%</span></div><div class="uniform">다둥이 행복카드 명의자(가족 포함)</div><div class="uniform mt-1">증빙: 신분증, 행복카드</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">🎭</span>예술인</div><span class="btn3d" style="padding:6px 10px">30%</span></div><div class="uniform">예술인패스 소지자</div><div class="uniform mt-1">증빙: 예술인패스</div></div>
+        <div class="discount-card"><div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">🏙️</span>인천시민</div><span class="btn3d" style="padding:6px 10px">30%</span></div><div class="uniform">주소지 인천광역시 (인천e음카드 포함)</div><div class="uniform mt-1">증빙: 주민등록증/인천e음</div></div>
+        <div class="discount-card sm:col-span-2 lg:col-span-3">
+          <div class="flex items-center justify-between mb-1"><div class="discount-title"><span class="icon">👥</span>단체할인</div><span class="btn3d" style="padding:6px 10px">30%</span></div>
+          <div class="uniform">10인 이상(기획사 문의)</div>
+          <div class="uniform mt-1">문의: 070-4220-3287 / 카카오톡 피셔인젤 예술기획</div>
+        </div>
+      </div>
+
+      <div class="card p-5 mt-8">
+        <div class="eyebrow mb-1">Notice</div>
+        <ul class="notice-list uniform">
+          <li>모든 할인은 실 관람자 기준 적용, 중복 적용 불가</li>
+          <li>할인 대상 본인이 직접 증빙 후 수령(대리 수령·양도 불가)</li>
+          <li>증빙자료 미지참 시 정가 대비 차액 지불</li>
+          <li>공연 당일 취소/변경/환불 및 현장 할인율 변경 불가</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Venue -->
+  <section id="venue" class="bg-black py-16 border-t border-white/10">
+    <div class="container mx-auto px-6">
+      <div class="eyebrow mb-2">Venue</div>
+      <h3 class="text-[30px] md:text-[36px] font-semibold mb-3">인천 중구문화회관</h3>
+      <p class="soft">인천광역시 중구 축항대로296번길 81</p>
+      <p class="soft mb-4">대표전화 032-886-9045</p>
+      <div class="grid gap-6">
+        <div class="v-block">
+          <div class="v-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><rect x="4" y="3" width="16" height="14" rx="3"/><circle cx="8.5" cy="16.5" r="1.5"/><circle cx="15.5" cy="16.5" r="1.5"/><path d="M6 20h12"/></svg>
+          </div>
+          <div>
+            <div class="v-title">지하철 이용</div>
+            <ul class="v-ul soft text-sm">
+              <li>동인천지하상가 7번 출구 → 시내버스 12번, 24번 환승 → 신선초등학교(유림노르웨이숲) 하차 → 시내버스 13번, 46번 환승 → 중구문화회관 하차</li>
+              <li>동인천역 1번 출구 → 마을버스 521번 탑승 → 정비단지 하차 후 도보 5분(갯골수지 맞은편)</li>
+              <li>인하대역 1번 출구 → 시내버스 46번 탑승 → 중구문화회관 하차</li>
+              <li>숭의역 2번 출구 → 시내버스 13번 탑승 → 중구문화회관 하차</li>
+            </ul>
+          </div>
+        </div>
+        <div class="v-block">
+          <div class="v-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="3"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/></svg>
+          </div>
+          <div>
+            <div class="v-title">버스 이용</div>
+            <ul class="v-ul soft text-sm">
+              <li>마을버스 521번, 519번, 시내버스 12번, 13번, 24번, 46번</li>
+              <li>정류장: 중구문화회관, 신선초(유림노르웨이숲), 정비단지</li>
+            </ul>
+          </div>
+        </div>
+        <div class="v-block">
+          <div class="v-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M3 19v-6l3-4h12l3 4v6"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/><path d="M7 7h5a3 3 0 0 1 0 6H7z"/></svg>
+          </div>
+          <div>
+            <div class="v-title">주차 안내</div>
+            <ul class="v-ul soft text-sm">
+              <li>공연 관람 시 3시간 주차 가능 · 전기차 충전소 없음</li>
+              <li>중구문화회관: 53대(일반 52대, 장애인 1대)</li>
+              <li>중구국민체육센터: 159대(일반 138대, 장애인 14대, 여성 7대)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-3">
+        <a target="_blank" href="https://map.naver.com/v5/search/%EC%9D%B8%EC%B2%9C%20%EC%A4%91%EA%B5%AC%EB%AC%B8%ED%99%94%ED%9A%8C%EA%B4%80" class="btn3d">네이버 지도 열기</a>
+        <a target="_blank" href="https://maps.google.com/?q=%EC%9D%B8%EC%B2%9C%20%EC%A4%91%EA%B5%AC%EB%AC%B8%ED%99%94%ED%9A%8C%EA%B4%80" class="btn3d">Google 지도 열기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-white/80 text-sm py-10 text-center border-t border-white/10">
+    <div class="container mx-auto px-6 flex flex-col items-center gap-4">
+      <div class="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+        <a href="https://instagram.com/fischerinsel" target="_blank" class="inline-flex items-center gap-2 hover:opacity-90">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <defs><linearGradient id="ig2" x1="0" y1="24" x2="24" y2="0"><stop stop-color="#F58529"/><stop offset="0.5" stop-color="#DD2A7B"/><stop offset="1" stop-color="#8134AF"/></linearGradient></defs>
+            <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#ig2)"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/></svg>
+          <span>@fischerinsel</span>
+        </a>
+        <a href="mailto:fischerinsel2014@gmail.com" class="inline-flex items-center gap-2 hover:opacity-90">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <span>fischerinsel2014@gmail.com</span>
+        </a>
+        <a href="tel:07042203287" class="inline-flex items-center gap-2 hover:opacity-90">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.89.33 1.76.62 2.59a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.49-1.14a2 2 0 0 1 2.11-.45c.83.29 1.7.5 2.59.62A2 2 0 0 1 22 16.92z"/></svg>
+          <span>070-4220-3287</span>
+        </a>
+      </div>
+      <div class="soft leading-6 text-center">
+        <div>2025 IN CHOI GUITAR RECITAL</div>
+        <div>'FROM HERE TO EVERYWHERE'</div>
+        <div>FISCHERINSEL ARTS</div>
+        <div class="mt-2 text-xs">© 2025 FISCHERINSEL ARTS. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Slide menu
+    const sideMenu = document.getElementById('sideMenu');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuClose = document.getElementById('menuClose');
+    function openMenu(){ sideMenu.classList.add('open'); sideMenu.setAttribute('aria-hidden','false'); menuBtn.setAttribute('aria-expanded','true'); }
+    function closeMenu(){ sideMenu.classList.remove('open'); sideMenu.setAttribute('aria-hidden','true'); menuBtn.setAttribute('aria-expanded','false'); }
+    menuBtn.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    sideMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+  </script>
+</body>
+</html>
