@@ -21,6 +21,96 @@
       });
     }
   }
+<script>
+  // 도메인 → 플랫폼 이름 매핑 (필요시 추가/수정)
+  const SOCIAL_MAP = [
+    { test: /instagram\.com/i, platform: 'instagram' },
+    { test: /youtube\.com|youtu\.be/i, platform: 'youtube' },
+    { test: /inchoi\.kr/i, platform: 'artist_site' },
+    { test: /fischerinsel/i, platform: 'agency_site' },
+    // { test: /x\.com|twitter\.com/i, platform: 'x' }, // 나중에 추가 가능
+  ];
+
+  function inferPlatform(url){
+    try{
+      const u = new URL(url, location.href);
+      const host = u.hostname;
+      for (const m of SOCIAL_MAP){
+        if (m.test.test(host)) return m.platform;
+      }
+      return 'website';
+    }catch(e){
+      return 'website';
+    }
+  }
+
+  function extractHandle(url){
+    try{
+      const u = new URL(url, location.href);
+      // instagram: /{handle}  | youtube 채널: /@handle
+      const path = u.pathname.replace(/\/+$/, '');
+      const at = path.match(/\/@([^\/?#]+)/);
+      if (at) return '@' + at[1];
+      const segs = path.split('/').filter(Boolean);
+      if (segs.length) return segs[segs.length - 1];
+    }catch(e){}
+    return '';
+  }
+
+  // 공통 이벤트 송신
+  function sendSocialClick(params){
+    if (typeof gtag === 'function') {
+      gtag('event', 'social_click', {
+        event_category: 'engagement',
+        platform: params.platform || 'website',    // instagram / youtube / artist_site / agency_site ...
+        handle: params.handle || '',              // @inchoiguitar, @inchoi2014 등
+        person: params.person || '',              // 최인/유현수/박재린/피셔인젤 등
+        section: params.section || '',            // artists / footer 등
+        link_url: params.link || '',
+        page_location: location.href
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // 추적 대상: 페이지의 모든 a[href] 중 외부/소셜 링크
+    const links = Array.from(document.querySelectorAll('a[href]'));
+
+    links.forEach(a => {
+      const href = a.getAttribute('href');
+      if (!href) return;
+
+      const platform = inferPlatform(href);
+      if (!platform || (platform === 'website' && !/inchoi\.kr|fischerinsel/i.test(href))) {
+        // 일반 내부 링크는 무시 (필요시 조건 조정)
+        return;
+      }
+
+      // 섹션/사람 추정
+      const section = a.closest('section')?.id || 'nav_or_footer';
+      // 아티스트 카드 내부면 이름 가져오기
+      let person = '';
+      const artistCard = a.closest('.artist-card');
+      if (artistCard) {
+        const nameEl = artistCard.querySelector('h3');
+        if (nameEl) person = nameEl.textContent.split(/\s/)[0].trim(); // "최인" 등
+      }
+      if (!person && /fischerinsel/i.test(href)) person = 'Fischerinsel';
+
+      const handle = extractHandle(href);
+
+      a.addEventListener('click', () => {
+        sendSocialClick({
+          platform,
+          handle,
+          person,
+          section,
+          link: href
+        });
+      }, {passive:true});
+    });
+  });
+</script>
 
   // DOM 준비되면 인터파크 예매 링크에 이벤트 바인딩
   document.addEventListener('DOMContentLoaded', function(){
