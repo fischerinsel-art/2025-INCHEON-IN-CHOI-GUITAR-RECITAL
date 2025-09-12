@@ -125,46 +125,51 @@
 #program h2{font-size:24px;white-space:nowrap}
 @media(min-width:768px){#program h2{font-size:36px}}
 
-    /* ===== Mercer-style line-by-line reveal ===== */
-.reveal-wrap{ position: relative; isolation:isolate; }
-.reveal-bg{ position:absolute; inset:0; z-index:0; }
-.reveal-overlay{ position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.25) 40%, rgba(0,0,0,.6)); z-index:1; }
-
-.reveal-line{
+/* Statement 배경: 모바일은 cover, PC는 contain */
+#feature{
   position: relative;
-  z-index: 2;               /* 배경 위에 */
-  opacity: 0;
-  transform: translateY(28px);
-  transition: transform .8s cubic-bezier(.22,.61,.36,1), opacity .8s ease;
-  transition-delay: var(--d, 0s); /* 개별 지연 */
-  will-change: transform, opacity;
-}
-.reveal-line.show{
-  opacity: 1;
-  transform: translateY(0);
+  background-image: url('images/statement_background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 모바일 기본: 화면 한 장 높이 + cover */
+  min-height: 70vh;
+  background-size: cover;
 }
 
-/* 줄별 크기(그전의 statement 스타일 대체) */
+/* 배경 위 가독성 오버레이 (섹션 전체) */
+#feature::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.25) 40%, rgba(0,0,0,.6));
+}
+
+/* PC 이상: 이미지 전체가 보이도록 contain */
+@media (min-width: 1024px){
+  #feature{
+    /* 높이는 내용에 맞춰 자동, 이미지 전체가 보이도록 contain */
+    min-height: auto;
+    padding: 80px 0; /* 여백 주기 */
+    background-size: contain;
+  }
+}
+
+/* (애니메이션 기존 클래스 유지) */
+.reveal-wrap{ position: relative; isolation:isolate; }
+.reveal-line{
+  position: relative; z-index: 1;
+  opacity: 0; transform: translateY(28px);
+  transition: transform .8s cubic-bezier(.22,.61,.36,1), opacity .8s ease;
+  transition-delay: var(--d, 0s);
+}
+.reveal-line.show{ opacity: 1; transform: translateY(0); }
 .reveal-h1{ font-weight:700; letter-spacing:.02em; text-transform:uppercase; }
 .reveal-sub{ color:rgba(255,255,255,.92); }
 .reveal-sub2{ color:rgba(255,255,255,.8); }
+@media (min-width:768px){ .reveal-h1{font-size:44px} .reveal-sub,.reveal-sub2{font-size:18px} }
+@media (max-width:767px){ .reveal-h1{font-size:26px} .reveal-sub,.reveal-sub2{font-size:15px} }
+@media (prefers-reduced-motion: reduce){ .reveal-line{transition:none;opacity:1;transform:none} }
 
-@media (min-width:768px){
-  .reveal-h1{ font-size:44px }
-  .reveal-sub{ font-size:18px }
-  .reveal-sub2{ font-size:18px }
-}
-@media (max-width:767px){
-  .reveal-h1{ font-size:26px }
-  .reveal-sub{ font-size:15px }
-  .reveal-sub2{ font-size:15px }
-}
-
-/* 접근성: 모션 선호 안함이면 즉시 표시 */
-@media (prefers-reduced-motion: reduce){
-  .reveal-line{ transition:none; opacity:1; transform:none }
-}
-    
   </style>
 </head>
 <body>
@@ -206,20 +211,17 @@
     <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/60"></div>
   </header>
 
-  <!-- Statement -->
-<section id="feature" class="text-white py-14 border-t border-white/10 relative bg-black">
-  <div class="absolute inset-0">
-    <img src="images/statement_background.jpg" alt="Statement Background"
-         class="w-full h-full object-cover opacity-30" />
-  </div>
+  <!-- Statement (배경=CSS, 라인별 등장) -->
+<section id="feature" class="reveal-wrap border-t border-white/10">
   <div class="relative container mx-auto px-6 text-center max-w-3xl">
-    <h1 class="statement-h1 tracking-tight uppercase fade-up">IMMERSIVE MUSIC EXPERIENCE</h1>
-    <p class="statement-sub mt-4 text-white/90 fade-up delay-1">최인이 바라본 음악적 풍경</p>
-    <p class="statement-sub mt-2 text-white/80 fade-up delay-2">
+    <h1 class="reveal-line reveal-h1" style="--d:0s;">IMMERSIVE MUSIC EXPERIENCE</h1>
+    <p  class="reveal-line reveal-sub mt-4" style="--d:.15s;">최인이 바라본 음악적 풍경</p>
+    <p  class="reveal-line reveal-sub2 mt-2" style="--d:.30s;">
       음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.
     </p>
   </div>
 </section>
+
 
   
 
