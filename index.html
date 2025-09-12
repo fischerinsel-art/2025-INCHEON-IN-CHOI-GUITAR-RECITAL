@@ -9,6 +9,30 @@
    gtag('js', new Date());
    gtag('config', 'G-J53N2WFMLN');
  </script>
+<script>
+  // 예매 클릭 이벤트 전송 도우미
+  function sendTicketClick(sectionId, linkUrl){
+    if (typeof gtag === 'function') {
+      gtag('event', 'ticket_click', {
+        event_category: 'engagement',
+        event_label: sectionId || '(unknown)',
+        link_url: linkUrl || '',
+        page_location: location.href
+      });
+    }
+  }
+
+  // DOM 준비되면 인터파크 예매 링크에 이벤트 바인딩
+  document.addEventListener('DOMContentLoaded', function(){
+    const sel = 'a[href*="interpark.com/goods/25013136"]';
+    document.querySelectorAll(sel).forEach(a => {
+      a.addEventListener('click', () => {
+        const section = a.closest('section')?.id || 'nav';
+        sendTicketClick(section, a.href);
+      }, {passive:true});
+    });
+  });
+</script>
 
   
   <meta charset="utf-8">
