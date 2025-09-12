@@ -146,14 +146,16 @@
 .statement-frame{
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;              /* 4:3 비율 유지 */
-  background-image: url('images/statement_background.jpg'); /* 배경 이미지 경로 */
+  aspect-ratio: 4 / 3;              /* 4:3 유지 */
+  background-image: url('images/statement_background.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;           /* 프레임 안에서 꽉 차게 */
+  border: none;                     /* ← 흰 라인 원인 제거 */
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.1);
+  background-color:#000;            /* ← 가장자리 누수 방지 */
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35); /* 은은한 그림자만 */
 }
 
 /* 가독성 오버레이 + 중앙 정렬 */
@@ -193,7 +195,33 @@
 @media (prefers-reduced-motion: reduce){
   .reveal-line{ transition:none; opacity:1; transform:none }
 }
-    
+ :root{
+  --stack-gap-mobile: 28px; /* 모바일 간격 */
+  --stack-gap-desktop: 56px; /* 데스크탑 간격 */
+}
+
+/* Statement 위/아래 동일 간격 */
+#feature{
+  margin-top: var(--stack-gap-mobile);
+  margin-bottom: var(--stack-gap-mobile);
+}
+@media (min-width:768px){
+  #feature{
+    margin-top: var(--stack-gap-desktop);
+    margin-bottom: var(--stack-gap-desktop);
+  }
+}
+
+/* Poster 섹션 상단 패딩을 동일 간격으로 맞춤 */
+#poster{
+  padding-top: var(--stack-gap-mobile) !important;
+}
+@media (min-width:768px){
+  #poster{
+    padding-top: var(--stack-gap-desktop) !important;
+  }
+}
+   
     
   </style>
 </head>
