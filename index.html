@@ -391,6 +391,25 @@
   }
 }
   #unmuteBtn { box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+
+#soundToggleBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4); /* 검정 반투명 */
+  color: white;
+  font-size: 20px;
+  line-height: 48px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#soundToggleBtn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
     
   </style>
 </head>
@@ -433,7 +452,8 @@
   <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/60"></div>
 
   <!-- 소리 켜기 버튼 -->
-  <button id="unmuteBtn" class="btn3d absolute right-4 bottom-4 z-10">🔊 사운드 켜기</button>
+<button id="soundToggleBtn" aria-label="Toggle sound">🔇</button>
+
 </header>
 
 
@@ -809,47 +829,49 @@
 <!-- YouTube IFrame API -->
 <script src="https://www.youtube.com/iframe_api"></script>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
   let player;
+  let isMuted = true; // 시작은 음소거
 
-  // API가 로드되면 자동 호출되는 전역 함수 (필수 이름)
   function onYouTubeIframeAPIReady(){
     player = new YT.Player('heroPlayer', {
-      videoId: '4tJQ3M9aYaQ', // 당신의 영상 ID
+      videoId: '4tJQ3M9aYaQ', // 영상 ID
       playerVars: {
         autoplay: 1,
-        controls: 0,
-        mute: 1,              // 초기 무음 (필수)
+        mute: 1,             // 시작은 무음
         loop: 1,
-        playlist: '4tJQ3M9aYaQ', // loop 동작 위해 필요
-        rel: 0,
+        playlist: '4tJQ3M9aYaQ',
+        controls: 0,
         modestbranding: 1,
-        playsinline: 1,       // iOS 전체화면 방지
+        rel: 0,
+        playsinline: 1
       },
       events: {
-        onReady: (e) => { e.target.playVideo(); }
+        onReady: (e) => e.target.playVideo()
       }
     });
   }
 
-  // 소리 켜기 버튼
-  document.addEventListener('DOMContentLoaded', function(){
-    const btn = document.getElementById('unmuteBtn');
-    if (!btn) return;
-    btn.addEventListener('click', function(){
-      if (!player) return;
-      try {
-        player.unMute();
-        player.setVolume(100);
-        player.playVideo();
-        btn.style.display = 'none'; // 한 번 켜면 버튼 숨김 (원하면 유지 가능)
-      } catch(e) {
-        // 드물게 모바일 정책으로 즉시 재생이 막히면, 한 번 더 눌러주세요 안내 가능
-        console.warn(e);
-      }
-    });
+document.addEventListener('DOMContentLoaded', function(){
+  const btn = document.getElementById('soundToggleBtn');
+  btn.addEventListener('click', function(){
+    if (!player) return;
+
+    if (isMuted){
+      player.unMute();
+      player.setVolume(100);
+      btn.textContent = '🔊';
+      isMuted = false;
+    } else {
+      player.mute();
+      btn.textContent = '🔇';
+      isMuted = true;
+    }
   });
+});
 </script>
+
 
 </body>
 </html>
