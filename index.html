@@ -390,7 +390,7 @@
     padding-top: var(--stack-gap-desktop) !important;
   }
 }
-   
+  #unmuteBtn { box-shadow: 0 8px 24px rgba(0,0,0,.35); }
     
   </style>
 </head>
@@ -428,10 +428,14 @@
   </nav>
 
   <!-- Hero -->
-  <header id="top" class="relative w-full h-[70vh] md:h-screen overflow-hidden">
-    <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/4tJQ3M9aYaQ?autoplay=1&mute=1&loop=1&playlist=4tJQ3M9aYaQ&controls=0&showinfo=0&modestbranding=1&rel=0" title="Hero" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-    <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/60"></div>
-  </header>
+<header id="top" class="relative w-full h-[70vh] md:h-screen overflow-hidden">
+  <div id="heroPlayer" class="absolute top-0 left-0 w-full h-full"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/60"></div>
+
+  <!-- 소리 켜기 버튼 -->
+  <button id="unmuteBtn" class="btn3d absolute right-4 bottom-4 z-10">🔊 사운드 켜기</button>
+</header>
+
 
   <!-- Statement (포스터와 동일 폭, 4:3 프레임, 중앙 텍스트) -->
 <section id="feature" class="py-14 border-t border-white/10">
@@ -802,6 +806,50 @@
   })();
 </script>
 
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+  let player;
+
+  // API가 로드되면 자동 호출되는 전역 함수 (필수 이름)
+  function onYouTubeIframeAPIReady(){
+    player = new YT.Player('heroPlayer', {
+      videoId: '4tJQ3M9aYaQ', // 당신의 영상 ID
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        mute: 1,              // 초기 무음 (필수)
+        loop: 1,
+        playlist: '4tJQ3M9aYaQ', // loop 동작 위해 필요
+        rel: 0,
+        modestbranding: 1,
+        playsinline: 1,       // iOS 전체화면 방지
+      },
+      events: {
+        onReady: (e) => { e.target.playVideo(); }
+      }
+    });
+  }
+
+  // 소리 켜기 버튼
+  document.addEventListener('DOMContentLoaded', function(){
+    const btn = document.getElementById('unmuteBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function(){
+      if (!player) return;
+      try {
+        player.unMute();
+        player.setVolume(100);
+        player.playVideo();
+        btn.style.display = 'none'; // 한 번 켜면 버튼 숨김 (원하면 유지 가능)
+      } catch(e) {
+        // 드물게 모바일 정책으로 즉시 재생이 막히면, 한 번 더 눌러주세요 안내 가능
+        console.warn(e);
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
