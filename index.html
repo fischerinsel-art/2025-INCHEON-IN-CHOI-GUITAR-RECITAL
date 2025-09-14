@@ -410,6 +410,23 @@
   transform: scale(1.05);
 }
 
+/* Program overlay: 기본은 안 보이고, 클릭도 안 됨 */
+.prog-card .overlay{
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+/* 데스크톱 hover & JS로 여는 상태 둘 다 지원 */
+.prog-card:hover .overlay,
+.prog-card.open .overlay{
+  opacity: 1;
+  pointer-events: auto;   /* 열렸을 때만 클릭 가능 */
+}
+
+/* '탭하여 닫기 ✕'는 버튼처럼 보이게 */
+.tap-hint{ cursor:pointer; user-select:none; }
+
     
   </style>
 </head>
@@ -871,6 +888,53 @@ document.addEventListener('DOMContentLoaded', function(){
       player.mute();
       btn.textContent = '🔇';
       isMuted = true;
+    }
+  });
+});
+</script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.prog-card').forEach((card) => {
+    const overlay = card.querySelector('.overlay');
+    const hint = card.querySelector('.tap-hint');
+
+    // 카드 탭/클릭 → 열기
+    card.addEventListener('click', () => {
+      card.classList.add('open');
+    });
+
+    // 오버레이 빈 공간 클릭 → 닫기
+    if (overlay){
+      overlay.addEventListener('click', (e) => {
+        // 오버레이 바탕(overlay 자신)을 눌렀을 때만 닫기
+        if (e.target === overlay){
+          card.classList.remove('open');
+          e.stopPropagation();
+        }
+      });
+    }
+
+    // '탭하여 닫기 ✕' → 닫기 (키보드 접근성 포함)
+    if (hint){
+      hint.setAttribute('role','button');
+      hint.setAttribute('tabindex','0');
+
+      const close = (e) => {
+        card.classList.remove('open');
+        e.stopPropagation();
+      };
+      hint.addEventListener('click', close);
+      hint.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(e); }
+      });
+    }
+  });
+
+  // ESC로 모두 닫기
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape'){
+      document.querySelectorAll('.prog-card.open').forEach(c => c.classList.remove('open'));
     }
   });
 });
