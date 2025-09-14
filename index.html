@@ -427,6 +427,19 @@
 /* '탭하여 닫기 ✕'는 버튼처럼 보이게 */
 .tap-hint{ cursor:pointer; user-select:none; }
 
+/* 오버레이 닫기 버튼 (오른쪽 아래) */
+.overlay-close{
+  position:absolute; right:12px; bottom:12px;
+  width:40px; height:40px; border-radius:9999px;
+  background:rgba(0,0,0,.45); color:#fff; 
+  font-size:18px; line-height:40px; text-align:center;
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+  cursor:pointer; user-select:none;
+  transition:background .2s, transform .15s;
+}
+.overlay-close:hover{ background:rgba(0,0,0,.65); transform:scale(1.05); }
+.overlay-close:focus{ outline:2px solid #fff3; outline-offset:2px; }
     
   </style>
 </head>
@@ -893,7 +906,7 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
-  <script>
+ <script>
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.prog-card').forEach((card) => {
     const overlay = card.querySelector('.overlay');
@@ -904,38 +917,31 @@ document.addEventListener('DOMContentLoaded', () => {
       card.classList.add('open');
     });
 
-    // 오버레이 빈 공간 클릭 → 닫기
-    if (overlay){
-      overlay.addEventListener('click', (e) => {
-        // 오버레이 바탕(overlay 자신)을 눌렀을 때만 닫기
-        if (e.target === overlay){
-          card.classList.remove('open');
-          e.stopPropagation();
-        }
-      });
+    // "탭하여 닫기" 텍스트는 숨기거나 제거(선택)
+    if (hint) { hint.style.display = 'none'; }
+
+    // 닫기 버튼이 없으면 자동 생성
+    let closeBtn = overlay.querySelector('.overlay-close');
+    if (!closeBtn) {
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'overlay-close';
+      closeBtn.setAttribute('aria-label','닫기');
+      closeBtn.textContent = '✕';
+      overlay.appendChild(closeBtn);
     }
 
-    // '탭하여 닫기 ✕' → 닫기 (키보드 접근성 포함)
-    if (hint){
-      hint.setAttribute('role','button');
-      hint.setAttribute('tabindex','0');
+    // X 버튼으로만 닫기
+    const close = (e) => {
+      e.stopPropagation();
+      card.classList.remove('open');
+    };
+    closeBtn.addEventListener('click', close);
+    closeBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(e); }
+    });
 
-      const close = (e) => {
-        card.classList.remove('open');
-        e.stopPropagation();
-      };
-      hint.addEventListener('click', close);
-      hint.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(e); }
-      });
-    }
-  });
-
-  // ESC로 모두 닫기
-  document.addEventListener('keydown', (e)=>{
-    if (e.key === 'Escape'){
-      document.querySelectorAll('.prog-card.open').forEach(c => c.classList.remove('open'));
-    }
+    // 배경 빈공간 탭으로는 닫히지 않게 하려면 overlay 클릭 핸들러 추가하지 않음
+    // (혹시 이전에 overlay 클릭으로 닫는 코드가 있으면 제거하세요)
   });
 });
 </script>
