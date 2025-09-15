@@ -410,19 +410,10 @@
   transform: scale(1.05);
 }
 
-/* Program overlay: 기본은 안 보이고, 클릭도 안 됨 */
-.prog-card .overlay{
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
 
 /* 데스크톱 hover & JS로 여는 상태 둘 다 지원 */
-.prog-card:hover .overlay,
-.prog-card.open .overlay{
-  opacity: 1;
-  pointer-events: auto;   /* 열렸을 때만 클릭 가능 */
-}
+.prog-card .overlay{ opacity:0; pointer-events:none; transition:opacity .2s; }
+.prog-card.open .overlay{ opacity:1; pointer-events:auto; }
 
 /* '탭하여 닫기 ✕'는 버튼처럼 보이게 */
 .tap-hint{ cursor:pointer; user-select:none; }
@@ -430,7 +421,7 @@
 /* 오버레이 닫기 버튼 (오른쪽 아래) */
 .overlay-close{
   position:absolute; right:12px; bottom:12px;
-  width:40px; height:40px; border-radius:9999px;
+  width:30px; height:30px; border-radius:9999px;
   background:rgba(0,0,0,.45); color:#fff; 
   font-size:18px; line-height:40px; text-align:center;
   border:1px solid rgba(255,255,255,.25);
