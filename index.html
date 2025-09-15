@@ -415,6 +415,12 @@
 .prog-card .overlay{ opacity:0; pointer-events:none; transition:opacity .2s; }
 .prog-card.open .overlay{ opacity:1; pointer-events:auto; }
 
+.prog-card.closing .overlay{
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+    
 /* '탭하여 닫기 ✕'는 버튼처럼 보이게 */
 .tap-hint{ cursor:pointer; user-select:none; }
 
@@ -921,15 +927,20 @@ document.addEventListener('DOMContentLoaded', () => {
       overlay.appendChild(closeBtn);
     }
 
-    // X 버튼으로만 닫기
-    const close = (e) => {
-      e.stopPropagation();
-      card.classList.remove('open');
-    };
-    closeBtn.addEventListener('click', close);
-    closeBtn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(e); }
-    });
+const close = (e) => {
+  e.stopPropagation();
+  card.classList.remove('open');
+  card.classList.add('closing');         // hover보다 우선해서 닫힘 유지
+};
+
+// X 버튼에 적용
+closeBtn.addEventListener('click', close);
+
+// 마우스가 카드 밖으로 나가면 closing 해제 (다시 hover 정상 동작)
+card.addEventListener('mouseleave', () => {
+  card.classList.remove('closing');
+});
+
 
     // 배경 빈공간 탭으로는 닫히지 않게 하려면 overlay 클릭 핸들러 추가하지 않음
     // (혹시 이전에 overlay 클릭으로 닫는 코드가 있으면 제거하세요)
