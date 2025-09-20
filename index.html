@@ -332,7 +332,9 @@
   inset:0;              /* top/right/bottom/left: 0 */
   z-index:1;            /* 오버레이 텍스트(z-10)보다 아래, 프레임 배경 위 */
 }
-
+.statement__slide.is-active {
+  opacity: 1 !important;
+}
 /* 각 슬라이드 기본 상태: 화면을 꽉 채우고, 처음엔 보이지 않음 */
 .statement__slide{
   position:absolute;
@@ -455,11 +457,6 @@
 .overlay-close:hover{ background:rgba(0,0,0,.65); transform:scale(1.05); }
 .overlay-close:focus{ outline:2px solid #fff3; outline-offset:2px; }
     
-  </style>
-  <style>
-    .statement__slide.is-active {
-      opacity: 1 !important;
-    }
   </style>
   
 </head>
