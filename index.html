@@ -489,23 +489,34 @@
 </header>
 
 
-  <!-- Statement (포스터와 동일 폭, 4:3 프레임, 중앙 텍스트) -->
-<section id="feature" class="py-14 border-t border-white/10">
-  <div class="container mx-auto px-6 max-w-3xl">
-    <div class="statement-frame">
-      <div class="statement-overlay">
+<!-- Statement -->
+<section id="feature" class="py-14 border-t border-white/10 relative overflow-hidden">
+  <div class="container mx-auto px-6 max-w-3xl relative z-10">
+    <div class="statement-frame relative">
+
+      <!-- ✅ 슬라이드 배경 -->
+      <div class="statement__slideshow absolute inset-0 z-0" aria-hidden="true"></div>
+
+      <!-- ✅ 텍스트 오버레이 -->
+      <div class="statement-overlay relative z-10 bg-black/40 p-6">
         <div>
-          <h1 class="reveal-line reveal-h1" style="--d:0s;">IMMERSIVE MUSIC EXPERIENCE</h1>
-          <p  class="reveal-line reveal-sub mt-4" style="--d:.15s;">최인이 바라본 음악적 풍경</p>
-          <p  class="reveal-line reveal-sub2 mt-2" style="--d:.30s;">
+          <h1 class="reveal-line reveal-h1 text-white text-3xl font-bold" style="--d:0s;">
+            IMMERSIVE MUSIC EXPERIENCE
+          </h1>
+          <p class="reveal-line reveal-sub mt-4 text-white/90" style="--d:.15s;">
+            최인이 바라본 음악적 풍경
+          </p>
+          <p class="reveal-line reveal-sub2 mt-2 text-white/80" style="--d:.30s;">
             음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.
           </p>
         </div>
       </div>
+
     </div>
   </div>
 </section>
- 
+
+
 
   <!-- Poster -->
   <section id="poster" class="bg-black py-8 border-t border-white/10">
@@ -946,6 +957,56 @@ card.addEventListener('mouseleave', () => {
     // (혹시 이전에 overlay 클릭으로 닫는 코드가 있으면 제거하세요)
   });
 });
+</script>
+<script>
+(function () {
+  // ① 슬라이드에 사용할 이미지들 (원하는 개수만큼)
+  const IMAGES = [
+    '/assets/img/statement/01.jpg',
+    '/assets/img/statement/02.jpg',
+    '/assets/img/statement/03.jpg',
+    '/assets/img/statement/04.jpg'
+  ];
+
+  // ② 타이밍 설정 (필요시 조정)
+  const DISPLAY_MS = 5000;   // 한 장이 보이는 시간
+  const FADE_MS    = 1200;   // 크로스 디졸브(페이드) 시간
+
+  // ③ DOM 준비
+  const host = document.querySelector('.statement__slideshow');
+  if (!host || !IMAGES.length) return;
+
+  // 모션 최소화 설정이면 첫 장만 표시
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ④ 이미지 사전 로드
+  const preload = src => new Promise(res => { const i = new Image(); i.onload = res; i.src = src; });
+  Promise.all(IMAGES.map(preload)).then(() => {
+    // ⑤ 슬라이드 이미지 DOM 생성
+    IMAGES.forEach((src, idx) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';                // 장식용: 스크린 리더 제외
+      img.decoding = 'async';
+      img.loading = 'eager';       // 위 fold 영역이라 eager 권장
+      img.className = 'statement__slide';
+      if (idx === 0) img.classList.add('is-active');
+      host.appendChild(img);
+    });
+
+    if (prefersReduced || IMAGES.length < 2) return;
+
+    // ⑥ 순환 재생
+    let current = 0;
+    const slides = Array.from(host.querySelectorAll('.statement__slide'));
+    setInterval(() => {
+      const next = (current + 1) % slides.length;
+      slides[current].classList.remove('is-active');
+      slides[next].classList.add('is-active');
+      current = next;
+    }, DISPLAY_MS);
+  });
+})();
 </script>
 
 
