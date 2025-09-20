@@ -347,18 +347,24 @@
 }
 
 /* 가독성 오버레이 + 중앙 정렬 */
-.statement-overlay{
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  text-align: center;
-  padding: 24px;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,.45),
-    rgba(0,0,0,.25) 40%,
-    rgba(0,0,0,.55)
-  );
+.statement-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2; /* 배경보다 위 */
+  display: flex;
+  align-items: center;   /* 세로 중앙 */
+  justify-content: center; /* 가로 중앙 (왼쪽 정렬 원하면 지워도 됨) */
+  text-align: center;    /* 텍스트도 중앙정렬 */
+  padding: 2rem;
 }
+.statement-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45); /* 투명 블랙 레이어 */
+  z-index: -1; /* 텍스트보다 뒤 */
+}
+
 
 /* Mercer-style 순차 등장(기존 reveal 클래스 그대로 사용) */
 .reveal-line{
@@ -986,7 +992,7 @@ card.addEventListener('mouseleave', () => {
   ];
 
   // ② 타이밍 설정
-  const DISPLAY_MS = 5000; // 한 장 보이는 시간
+  const DISPLAY_MS = 3000; // 한 장 보이는 시간
   const FADE_MS    = 1200; // 페이드 시간 (CSS와 맞춤)
 
   // ③ 호스트 엘리먼트
