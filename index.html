@@ -346,23 +346,25 @@
   transition:opacity 1.2s ease-in-out;
 }
 
-/* 가독성 오버레이 + 중앙 정렬 */
+/* statement overlay 중앙 정렬 */
 .statement-overlay {
   position: absolute;
   inset: 0;
-  z-index: 2; /* 배경보다 위 */
+  z-index: 2;               /* 배경 위, 텍스트 위 */
   display: flex;
-  align-items: center;   /* 세로 중앙 */
-  justify-content: center; /* 가로 중앙 (왼쪽 정렬 원하면 지워도 됨) */
-  text-align: center;    /* 텍스트도 중앙정렬 */
+  align-items: center;       /* 세로 중앙 */
+  justify-content: center;   /* 가로 중앙 */
+  text-align: center;        /* 텍스트도 중앙정렬 */
   padding: 2rem;
 }
+
+/* 블랙 투명 레이어 (전체 덮개) */
 .statement-overlay::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.45); /* 투명 블랙 레이어 */
-  z-index: -1; /* 텍스트보다 뒤 */
+  background: rgba(0,0,0,0.45); /* 불투명도 조절 가능 (0.3~0.6 추천) */
+  z-index: -1;                  /* 텍스트보다 뒤 */
 }
 
 
