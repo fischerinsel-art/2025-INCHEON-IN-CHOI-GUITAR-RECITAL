@@ -326,6 +326,23 @@
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,.35); /* 은은한 그림자만 */
 }
+/* 배경 슬라이드 레이어가 섹션을 꽉 채우도록 */
+.statement__slideshow{
+  position:absolute;
+  inset:0;              /* top/right/bottom/left: 0 */
+  z-index:1;            /* 오버레이 텍스트(z-10)보다 아래, 프레임 배경 위 */
+}
+
+/* 각 슬라이드 기본 상태: 화면을 꽉 채우고, 처음엔 보이지 않음 */
+.statement__slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;      /* 어떤 화면비에서도 꽉 차게 */
+  opacity:0;
+  transition:opacity 1.2s ease-in-out;
+}
 
 /* 가독성 오버레이 + 중앙 정렬 */
 .statement-overlay{
