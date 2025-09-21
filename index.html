@@ -366,6 +366,27 @@
   background: rgba(0,0,0,0.45); /* 불투명도 조절 가능 (0.3~0.6 추천) */
   z-index: -1;                  /* 텍스트보다 뒤 */
 }
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .statement-frame {
+    aspect-ratio: auto;    /* 모바일에서는 비율 강제 해제 */
+    height: 60vh;          /* 화면 높이의 60% 정도 */
+  }
+
+  .statement-overlay {
+    padding: 1rem;
+    min-height: 100%;      /* 세로 중앙 안정화 */
+  }
+
+  .statement-overlay h1 {
+    font-size: 1.75rem;    /* 모바일에서 폰트 크기 줄임 */
+    line-height: 1.2;
+  }
+
+  .statement-overlay p {
+    font-size: 1rem;
+  }
+}
 
 
 /* Mercer-style 순차 등장(기존 reveal 클래스 그대로 사용) */
