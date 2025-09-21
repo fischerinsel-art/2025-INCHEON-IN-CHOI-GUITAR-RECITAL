@@ -311,81 +311,46 @@
 @media (max-width:767px){ .reveal-h1{font-size:26px} .reveal-sub,.reveal-sub2{font-size:15px} }
 @media (prefers-reduced-motion: reduce){ .reveal-line{transition:none;opacity:1;transform:none} }
 
-/* === Statement: 포스터와 동일 폭, 4:3 프레임 === */
+/* 4:3 프레임 (유지) */
 .statement-frame{
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;              /* 4:3 유지 */
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;           /* 프레임 안에서 꽉 차게 */
-  border: none;                     /* ← 흰 라인 원인 제거 */
+  aspect-ratio: 4 / 3;
   border-radius: 16px;
-  background-color:#000;            /* ← 가장자리 누수 방지 */
+  background:#000;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,.35); /* 은은한 그림자만 */
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
-/* 배경 슬라이드 레이어가 섹션을 꽉 채우도록 */
+
+/* 프레임 안을 가득 덮는 슬라이드 레이어 */
 .statement__slideshow{
   position:absolute;
-  inset:0;              /* top/right/bottom/left: 0 */
-  z-index:1;            /* 오버레이 텍스트(z-10)보다 아래, 프레임 배경 위 */
+  inset:0;
 }
-.statement__slide.is-active {
-  opacity: 1 !important;
-}
-/* 각 슬라이드 기본 상태: 화면을 꽉 채우고, 처음엔 보이지 않음 */
+
+/* 겹쳐놓고 투명도 전환 */
 .statement__slide{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  object-fit:cover;      /* 어떤 화면비에서도 꽉 차게 */
+  object-fit:cover;
   opacity:0;
   transition:opacity 1.2s ease-in-out;
 }
+.statement__slide.is-active{ opacity:1 !important; }
 
-/* statement overlay 중앙 정렬 */
-.statement-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;               /* 배경 위, 텍스트 위 */
-  display: flex;
-  align-items: center;       /* 세로 중앙 */
-  justify-content: center;   /* 가로 중앙 */
-  text-align: center;        /* 텍스트도 중앙정렬 */
-  padding: 2rem;
+/* (선택) 사진 아래 문구 타이포 살짝 키움 */
+.statement-copy .reveal-h1{ letter-spacing:.02em; text-transform:uppercase; }
+@media (min-width:768px){
+  .statement-copy .reveal-h1{ font-size:44px; }
+  .statement-copy .reveal-sub,
+  .statement-copy .reveal-sub2{ font-size:18px; }
 }
-
-/* 블랙 투명 레이어 (전체 덮개) */
-.statement-overlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45); /* 불투명도 조절 가능 (0.3~0.6 추천) */
-  z-index: -1;                  /* 텍스트보다 뒤 */
-}
-/* 모바일 대응 */
-@media (max-width: 768px) {
-  .statement-frame {
-    aspect-ratio: auto;    /* 모바일에서는 비율 강제 해제 */
-    height: 60vh;          /* 화면 높이의 60% 정도 */
-  }
-
-  .statement-overlay {
-    padding: 1rem;
-    min-height: 100%;      /* 세로 중앙 안정화 */
-  }
-
-  .statement-overlay h1 {
-    font-size: 1.75rem;    /* 모바일에서 폰트 크기 줄임 */
-    line-height: 1.2;
-  }
-
-  .statement-overlay p {
-    font-size: 1rem;
-  }
+@media (max-width:767px){
+  .statement-copy .reveal-h1{ font-size:26px; }
+  .statement-copy .reveal-sub,
+  .statement-copy .reveal-sub2{ font-size:15px; }
 }
 
 
@@ -538,28 +503,27 @@
 </header>
 
 
-<!-- Statement (포스터와 동일 폭, 4:3 프레임, 중앙 텍스트) -->
+<!-- Statement (4:3 프레임 슬라이드 + 아래 텍스트) -->
 <section id="feature" class="py-14 border-t border-white/10">
   <div class="container mx-auto px-6 max-w-3xl">
+
+    <!-- 4:3 프레임: 배경 슬라이드만 -->
     <div class="statement-frame relative overflow-hidden">
-
-      <!-- ✅ 배경 슬라이드 레이어 -->
-      <div class="statement__slideshow absolute inset-0 z-0" aria-hidden="true"></div>
-
-      <!-- ✅ 텍스트 오버레이 (기존 내용 유지) -->
-      <div class="statement-overlay relative z-10">
-        <div>
-          <h1 class="reveal-line reveal-h1" style="--d:0s;">IMMERSIVE MUSIC EXPERIENCE</h1>
-          <p class="reveal-line reveal-sub mt-4" style="--d:.15s;">최인이 바라본 음악적 풍경</p>
-          <p class="reveal-line reveal-sub2 mt-2" style="--d:.30s;">
-            음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.
-          </p>
-        </div>
-      </div>
-
+      <div class="statement__slideshow" aria-hidden="true"></div>
     </div>
+
+    <!-- 사진 아래 문구 -->
+    <div class="statement-copy text-center mt-6">
+      <h1 class="reveal-line reveal-h1" style="--d:0s;">IMMERSIVE MUSIC EXPERIENCE</h1>
+      <p class="reveal-line reveal-sub mt-4" style="--d:.15s;">최인이 바라본 음악적 풍경</p>
+      <p class="reveal-line reveal-sub2 mt-2" style="--d:.30s;">
+        음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.
+      </p>
+    </div>
+
   </div>
 </section>
+
 
 
 
@@ -1011,7 +975,6 @@ card.addEventListener('mouseleave', () => {
     'images/statement01.jpg',
     'images/statement02.jpg',
     'images/statement03.jpg',
-    'images/statement04.jpg'
   ];
 
   // ② 타이밍 설정
