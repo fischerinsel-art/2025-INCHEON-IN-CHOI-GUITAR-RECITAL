@@ -1,1 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FROM HERE TO EVERYWHERE — Incheon 2025 · Archive</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com">    // ===== Lightbox =====
+    (function(){
+      const box = document.getElementById('lightbox');
+      const img = document.getElementById('lbImg');
+      const meta = document.getElementById('lbMeta');
+      const zIn = document.getElementById('lbZoomIn');
+      const zOut = document.getElementById('lbZoomOut');
+      const fit = document.getElementById('lbFit');
+      const closeBtn = document.getElementById('lbClose');
+      let scale=1, tx=0, ty=0, isDown=false, lx=0, ly=0;
 
+      const apply = ()=>{ img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`; };
+      const open = (src)=>{
+        img.onload = ()=>{ meta.textContent = `${img.naturalWidth}×${img.naturalHeight}`; scale=1; tx=0; ty=0; apply(); };
+        img.src = src; box.classList.add('open');
+      };
+      const close = ()=>{ box.classList.remove('open'); };
+
+      document.querySelectorAll('[data-lightbox] img, [data-lightbox]').forEach(el=>{
+        const a = el.closest('[data-lightbox]'); if(!a) return;
+        a.addEventListener('click', (e)=>{ e.preventDefault(); open(a.getAttribute('href')); });
+      });
+
+      zIn.addEventListener('click', ()=>{ scale = Math.min(scale*1.25, 8); apply(); });
+      zOut.addEventListener('click', ()=>{ scale = Math.max(scale/1.25, 0.25); apply(); });
+      fit.addEventListener('click', ()=>{ scale=1; tx=0; ty=0; apply(); });
+      closeBtn.addEventListener('click', close);
+      box.addEventListener('click', (e)=>{ if(e.target===box) close(); });
+
+      // Drag to pan
+      img.addEventListener('mousedown', (e)=>{ isDown=true; img.style.cursor='grabbing'; lx=e.clientX; ly=e.clientY; });
+      window.addEventListener('mousemove', (e)=>{ if(!isDown) return; tx += (e.clientX-lx); ty += (e.clientY-ly); lx=e.clientX; ly=e.clientY; apply(); });
+      window.addEventListener('mouseup', ()=>{ isDown=false; img.style.cursor='grab'; });
+
+      // Wheel zoom around cursor
+      img.addEventListener('wheel', (e)=>{
+        e.preventDefault();
+        const rect = img.getBoundingClientRect();
+        const cx = e.clientX - rect.left - rect.width/2 - tx;
+        const cy = e.clientY - rect.top - rect.height/2 - ty;
+        const delta = Math.sign(e.deltaY) * -0.2; // up=zoom in
+        const ns = Math.min(8, Math.max(0.25, scale * (1+delta)));
+        // adjust translate so point under cursor stays under cursor
+        tx -= cx*(ns/scale - 1); ty -= cy*(ns/scale - 1); scale = ns; apply();
+      }, {passive:false});
+
+      // Esc to close
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+    })();
+      // ===== Lightbox =====
+    (function(){
+      const box = document.getElementById('lightbox');
+      const img = document.getElementById('lbImg');
+      const meta = document.getElementById('lbMeta');
+      const zIn = document.getElementById('lbZoomIn');
+      const zOut = document.getElementById('lbZoomOut');
+      const fit = document.getElementById('lbFit');
+      const closeBtn = document.getElementById('lbClose');
+      let scale=1, tx=0, ty=0, isDown=false, lx=0, ly=0;
+
+      const apply = ()=>{ img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`; };
+      const open = (src)=>{
+        img.onload = ()=>{ meta.textContent = `${img.naturalWidth}×${img.naturalHeight}`; scale=1; tx=0; ty=0; apply(); };
+        img.src = src; box.classList.add('open');
+      };
+      const close = ()=>{ box.classList.remove('open'); };
+
+      document.querySelectorAll('[data-lightbox] img, [data-lightbox]').forEach(el=>{
+        const a = el.closest('[data-lightbox]'); if(!a) return;
+        a.addEventListener('click', (e)=>{ e.preventDefault(); open(a.getAttribute('href')); });
+      });
+
+      zIn.addEventListener('click', ()=>{ scale = Math.min(scale*1.25, 8); apply(); });
+      zOut.addEventListener('click', ()=>{ scale = Math.max(scale/1.25, 0.25); apply(); });
+      fit.addEventListener('click', ()=>{ scale=1; tx=0; ty=0; apply(); });
+      closeBtn.addEventListener('click', close);
+      box.addEventListener('click', (e)=>{ if(e.target===box) close(); });
+
+      // Drag to pan
+      img.addEventListener('mousedown', (e)=>{ isDown=true; img.style.cursor='grabbing'; lx=e.clientX; ly=e.clientY; });
+      window.addEventListener('mousemove', (e)=>{ if(!isDown) return; tx += (e.clientX-lx); ty += (e.clientY-ly); lx=e.clientX; ly=e.clientY; apply(); });
+      window.addEventListener('mouseup', ()=>{ isDown=false; img.style.cursor='grab'; });
+
+      // Wheel zoom around cursor
+      img.addEventListener('wheel', (e)=>{
+        e.preventDefault();
+        const rect = img.getBoundingClientRect();
+        const cx = e.clientX - rect.left - rect.width/2 - tx;
+        const cy = e.clientY - rect.top - rect.height/2 - ty;
+        const delta = Math.sign(e.deltaY) * -0.2; // up=zoom in
+        const ns = Math.min(8, Math.max(0.25, scale * (1+delta)));
+        // adjust translate so point under cursor stays under cursor
+        tx -= cx*(ns/scale - 1); ty -= cy*(ns/scale - 1); scale = ns; apply();
+      }, {passive:false});
+
+      // Esc to close
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+    })();
+
+    // ===== YouTube Lazy Loader (썸네일 클릭 시 iframe 로드) =====
+    (function(){
+      const makeFrame = (id)=>{
+        const f = document.createElement('iframe');
+        f.setAttribute('title', 'YouTube video player');
+        f.setAttribute('frameborder', '0');
+        f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        f.setAttribute('allowfullscreen', '');
+        f.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&enablejsapi=1`;
+        f.style.position='absolute'; f.style.inset='0'; f.style.width='100%'; f.style.height='100%';
+        return f;
+      };
+      document.querySelectorAll('.yt-lazy').forEach(box=>{
+        box.addEventListener('click', ()=>{
+          const id = box.getAttribute('data-yt'); if(!id) return;
+          if(box.dataset.loaded) return; // already loaded
+          box.dataset.loaded = 'true';
+          box.innerHTML = '';
+          const f = makeFrame(id);
+          box.appendChild(f);
+        });
+        // keyboard accessibility
+        box.setAttribute('tabindex','0');
+        box.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); box.click(); } });
+      });
+    })();
+      // ===== TP (Tracks·Program) Switcher =====
+    (function(){
+      const items = document.querySelectorAll('.tp-item');
+      const panels = document.querySelectorAll('.tp-panel');
+      const show = (id)=>{
+        panels.forEach(p=>p.classList.add('hidden'));
+        const t = document.getElementById(id); if(t) t.classList.remove('hidden');
+        items.forEach(b=>b.classList.remove('ring-2','ring-white/50','bg-white/5'));
+        const active = Array.from(items).find(b=>b.getAttribute('data-panel')===id);
+        if(active) active.classList.add('ring-2','ring-white/50','bg-white/5');
+      };
+      items.forEach((b,i)=> b.addEventListener('click', ()=> show(b.getAttribute('data-panel'))));
+      // 초기 표시: 첫 곡
+      if(items[0]) show(items[0].getAttribute('data-panel'));
+    })();
+
+    // ===== Lightbox =====
+    (function(){
+      const box = document.getElementById('lightbox');
+      const img = document.getElementById('lbImg');
+      const meta = document.getElementById('lbMeta');
+      const zIn = document.getElementById('lbZoomIn');
+      const zOut = document.getElementById('lbZoomOut');
+      const fit = document.getElementById('lbFit');
+      const closeBtn = document.getElementById('lbClose');
+      let scale=1, tx=0, ty=0, isDown=false, lx=0, ly=0;
+
+      const apply = ()=>{ img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`; };
+      const open = (src)=>{
+        img.onload = ()=>{ meta.textContent = `${img.naturalWidth}×${img.naturalHeight}`; scale=1; tx=0; ty=0; apply(); };
+        img.src = src; box.classList.add('open');
+      };
+      const close = ()=>{ box.classList.remove('open'); };
+
+      document.querySelectorAll('[data-lightbox] img, [data-lightbox]').forEach(el=>{
+        const a = el.closest('[data-lightbox]'); if(!a) return;
+        a.addEventListener('click', (e)=>{ e.preventDefault(); open(a.getAttribute('href')); });
+      });
+
+      zIn.addEventListener('click', ()=>{ scale = Math.min(scale*1.25, 8); apply(); });
+      zOut.addEventListener('click', ()=>{ scale = Math.max(scale/1.25, 0.25); apply(); });
+      fit.addEventListener('click', ()=>{ scale=1; tx=0; ty=0; apply(); });
+      closeBtn.addEventListener('click', close);
+      box.addEventListener('click', (e)=>{ if(e.target===box) close(); });
+
+      // Drag to pan
+      img.addEventListener('mousedown', (e)=>{ isDown=true; img.style.cursor='grabbing'; lx=e.clientX; ly=e.clientY; });
+      window.addEventListener('mousemove', (e)=>{ if(!isDown) return; tx += (e.clientX-lx); ty += (e.clientY-ly); lx=e.clientX; ly=e.clientY; apply(); });
+      window.addEventListener('mouseup', ()=>{ isDown=false; img.style.cursor='grab'; });
+
+      // Wheel zoom around cursor
+      img.addEventListener('wheel', (e)=>{
+        e.preventDefault();
+        const rect = img.getBoundingClientRect();
+        const cx = e.clientX - rect.left - rect.width/2 - tx;
+        const cy = e.clientY - rect.top - rect.height/2 - ty;
+        const delta = Math.sign(e.deltaY) * -0.2; // up=zoom in
+        const ns = Math.min(8, Math.max(0.25, scale * (1+delta)));
+        // adjust translate so point under cursor stays under cursor
+        tx -= cx*(ns/scale - 1); ty -= cy*(ns/scale - 1); scale = ns; apply();
+      }, {passive:false});
+
+      // Esc to close
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+    })();
+
+    // ===== YouTube Lazy Loader =====
+    (function(){
+      const makeFrame = (id)=>{
+        const f = document.createElement('iframe');
+        f.setAttribute('title', 'YouTube video player');
+        f.setAttribute('frameborder', '0');
+        f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        f.setAttribute('allowfullscreen', '');
+        f.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&enablejsapi=1`;
+        f.style.position='absolute'; f.style.inset='0'; f.style.width='100%'; f.style.height='100%';
+        return f;
+      };
+      document.querySelectorAll('.yt-lazy').forEach(box=>{
+        box.addEventListener('click', ()=>{
+          const id = box.getAttribute('data-yt'); if(!id || id.startsWith('VIDEO_ID_')) return; // 아직 미지정 시 무시
+          if(box.dataset.loaded) return; // already loaded
+          box.dataset.loaded = 'true';
+          box.innerHTML = '';
+          const f = makeFrame(id);
+          box.appendChild(f);
+        });
+        box.setAttribute('tabindex','0');
+        box.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); box.click(); } });
+      });
+    })();
+  </script>
+  <style>
+    /* Smooth fade */
+    .fade-enter { opacity: 0; transform: translateY(8px); }
+    .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 400ms, transform 400ms; }
+    /* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; z-index: 50; }
+    .modal.open { display: flex; }
+    /* Slider */
+    .slider-track { display: flex; transition: transform 300ms ease; }
+    .slider-item { min-width: 100%; }
+    /*/* Aspect helpers */$1
+    /* ===== HERO CSS FADE SLIDES ===== */
+    .hero-slides { position: absolute; inset: 0; overflow: hidden; }
+    .hero-slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: heroFade 36s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+    .hero-slides img:nth-child(1)  { animation-delay: 0s; }
+    .hero-slides img:nth-child(2)  { animation-delay: 4s; }
+    .hero-slides img:nth-child(3)  { animation-delay: 8s; }
+    .hero-slides img:nth-child(4)  { animation-delay: 12s; }
+    .hero-slides img:nth-child(5)  { animation-delay: 16s; }
+    .hero-slides img:nth-child(6)  { animation-delay: 20s; }
+    .hero-slides img:nth-child(7)  { animation-delay: 24s; }
+    .hero-slides img:nth-child(8)  { animation-delay: 28s; }
+    .hero-slides img:nth-child(9)  { animation-delay: 32s; }
+
+    @keyframes heroFade {
+      0%   { opacity: 0; }
+      5%   { opacity: 1; }
+      11%  { opacity: 1; }
+      16%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    /* ===== Lightbox (원본 크기 보기 + 줌/패닝) ===== */
+    .lb-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.9);z-index:60}
+    .lb-modal.open{display:flex}
+    .lb-stage{position:relative;max-width:90vw;max-height:85vh;}
+    .lb-img{max-width:90vw;max-height:85vh;user-select:none;touch-action:none;cursor:grab;}
+    .lb-toolbar{position:absolute;top:8px;right:8px;display:flex;gap:6px}
+    .lb-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:8px 10px;border-radius:12px}
+    .lb-btn:hover{background:rgba(255,255,255,.2)}
+    .lb-meta{position:absolute;left:12px;bottom:8px;color:#c9c9c9;font-size:12px}
+    /* ===== Lightbox (원본 크기 보기 + 줌/패닝) ===== */
+    .lb-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.9);z-index:60}
+    .lb-modal.open{display:flex}
+    .lb-stage{position:relative;max-width:90vw;max-height:85vh;}
+    .lb-img{max-width:90vw;max-height:85vh;user-select:none;touch-action:none;cursor:grab;}
+    .lb-toolbar{position:absolute;top:8px;right:8px;display:flex;gap:6px}
+    .lb-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:8px 10px;border-radius:12px}
+    .lb-btn:hover{background:rgba(255,255,255,.2)}
+    .lb-meta{position:absolute;left:12px;bottom:8px;color:#c9c9c9;font-size:12px}
+
+    /* ===== YouTube Lazy Thumbnail (곡별) ===== */
+    .yt-lazy{position:relative;width:100%;height:0;padding-top:56.25%;background:#000;cursor:pointer}
+    .yt-lazy img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.9)}
+    .yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .yt-play::before{content:"";width:72px;height:72px;border-radius:9999px;background:rgba(0,0,0,.5);box-shadow:0 0 0 2px rgba(255,255,255,.2) inset}
+    .yt-play::after{content:"";position:absolute;margin-left:6px;border-left:18px solid white;border-top:12px solid transparent;border-bottom:12px solid transparent}
+    .yt-lazy:hover img{filter:brightness(1)}
+  </style>
+</head>
+<body class="bg-black text-white antialiased selection:bg-white/20 selection:text-white">
+  <!-- ====== NAV / SWITCH (인천 <-> SAC) ====== -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-black/50 backdrop-blur border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <a href="#" class="font-semibold tracking-wide">Fischerinsel Archive</a>
+      <nav class="space-x-3 text-sm text-zinc-300">
+        <!-- 필요한 실제 경로로 교체하세요 -->
+        <a class="hover:text-white" href="https://2025incheon.fischerinsel-art.com/">2025 Incheon</a>
+        <span class="text-zinc-600">/</span>
+        <a class="hover:text-white" href="https://2025sac.musicscape.fischerinsel-art.com/">2025 SAC</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====== HERO (CSS Fade Slideshow + CTA) ====== -->
+  <section class="relative min-h-[92vh] flex items-end" id="hero">
+    <!-- CSS fade slideshow (5 images) -->
+    <div class="hero-slides">
+      <img src="assets/images/hero_1.webp" alt="Hero 1" />
+      <img src="assets/images/hero_2.webp" alt="Hero 2" />
+      <img src="assets/images/hero_3.webp" alt="Hero 3" />
+      <img src="assets/images/hero_4.webp" alt="Hero 4" />
+      <img src="assets/images/hero_5.webp" alt="Hero 5" />
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
+    <div class="relative z-10 mx-auto max-w-6xl w-full px-4 pb-16">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-5xl font-semibold leading-tight">
+          <span class="block">FROM HERE TO EVERYWHERE</span>
+          <span class="block">In Choi Guitar Recital</span>
+        </h1>
+        <p class="mt-3 text-zinc-300">인천 중구문화회관 · 2025-10-25</p>
+        <div class="mt-3 text-sm text-zinc-300/90">
+          <span class="mr-2 text-zinc-400">주관</span> 피셔인젤 예술기획
+          <span class="mx-3 text-zinc-600">|</span>
+          <span class="mr-2 text-zinc-400">후원</span> 인천광역시, 인천문화재단, 이용한기타, 광주현대병원
+        </div>
+        <p class="mt-4 text-zinc-200/90 italic">최인이 바라본 음악적 풍경<br class="sm:hidden"/>
+        <span class="not-italic">음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.</span></p>
+        <div class="mt-6 flex items-center gap-3">
+          <a href="#full" class="inline-flex items-center rounded-2xl px-5 py-3 bg-white text-black font-medium hover:bg-zinc-200">Watch Full Performance</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FEATURED HIGHLIGHT (신규 섹션 · Full 위) ====== -->
+  <section id="featured" class="relative py-20 border-t border-white/10">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl sm:text-3xl font-semibold">Featured Highlight</h2>
+        <div class="text-sm text-zinc-400">대표 하이라이트</div>
+      </div>
+
+      <div class="mt-6 relative rounded-2xl overflow-hidden border border-white/10">
+        <div class="aspect-hero">
+          <iframe id="highlightPlayer" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_HL?enablejsapi=1&rel=0" title="Highlight video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="mt-4 flex items-center justify-between gap-4 text-sm text-zinc-300">
+        <p>인천 공연의 대표 하이라이트 영상입니다. 아래 카드에서 곡별 영상과 사진을 확인하세요.</p>
+        <a href="#tracks" class="inline-flex items-center rounded-xl px-4 py-2 border border-white/10 hover:bg-white/10">See all tracks ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FULL PERFORMANCE (2번 섹션) ====== -->
+  <section id="full" class="relative py-20 border-t border-white/10">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl sm:text-3xl font-semibold">Full Performance</h2>
+        <div class="text-sm text-zinc-400">총 러닝타임 00:00:00</div>
+      </div>
+
+      <div class="mt-6 relative rounded-2xl overflow-hidden border border-white/10">
+        <div class="aspect-hero">
+          <iframe id="fullPlayer" class="w-full h-full" src="https://www.youtube.com/embed/RPMV6sAQo6w?enablejsapi=1&rel=0" title="Full performance — Incheon 2025" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="mt-6 grid sm:grid-cols-3 gap-6">
+        <div class="sm:col-span-2 text-zinc-300 leading-relaxed">
+          <p>‘From Here to Everywhere’ 인천 실황 영상입니다. 아래 <strong>Tracks</strong>에서 곡별 사진 슬라이드와 개별 영상을 확인할 수 있습니다.</p>
+        </div>
+        <div class="sm:col-span-1">
+          <button id="toggleChapters" class="w-full rounded-xl border border-white/10 px-4 py-3 hover:bg-white/10">Chapters (타임스탬프)</button>
+          <ul id="chapters" class="hidden mt-3 space-y-2 text-sm text-zinc-300">
+            <!-- 실제 타임스탬프로 교체하세요 -->
+            <li><a class="hover:text-white" href="https://youtu.be/RPMV6sAQo6w?t=0" target="_blank">00:00 – 숲</a></li>
+            <li><a class="hover:text-white" href="https://youtu.be/RPMV6sAQo6w?t=0" target="_blank">--:-- – 바다, 산</a></li>
+            <li><a class="hover:text-white" href="https://youtu.be/RPMV6sAQo6w?t=0" target="_blank">--:-- – 서(書)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== TRACKS (작은 카드 · 모달 + 슬라이드 재사용) ====== -->
+  <!-- ====== TRACKS · PROGRAM (Combined) ====== -->
+  <section id="tracks-program" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl sm:text-3xl font-semibold">Tracks · Program</h2>
+      <p class="mt-2 text-zinc-400">왼쪽에서 곡을 선택하면, 오른쪽에서 설명과 영상을 볼 수 있습니다.</p>
+
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left: vertical thumbnails list -->
+        <aside class="space-y-2 lg:col-span-1">
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-forest">
+            <img src="assets/images/forest_thumb.jpg" alt="숲" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">숲</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-seamountain">
+            <img src="assets/images/seamountain_thumb.jpg" alt="바다, 산" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">바다, 산</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-seo">
+            <img src="assets/images/seo_thumb.jpg" alt="서(書)" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">서(書)</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-road">
+            <img src="assets/images/road_thumb.jpg" alt="가던길" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">가던길</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-gampo">
+            <img src="assets/images/gampo_thumb.jpg" alt="감포 앞 바다에서" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">감포 앞 바다에서</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-seokpungsoo">
+            <img src="assets/images/seokpungsoo_thumb.jpg" alt="석풍수" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">석풍수</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-prayer">
+            <img src="assets/images/prayer_thumb.jpg" alt="PRAYER" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">PRAYER</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-island">
+            <img src="assets/images/island_thumb.jpg" alt="ISLAND" class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">ISLAND</span>
+          </button>
+          <button class="tp-item w-full flex items-center gap-3 p-2 rounded-xl border border-white/10 hover:bg-white/5" data-panel="panel-fhte">
+            <img src="assets/images/fhte_thumb.jpg" alt="FROM HERE TO EVERYWHERE..." class="w-20 h-12 object-cover rounded-md" />
+            <span class="text-sm font-medium">FROM HERE TO EVERYWHERE...</span>
+          </button>
+        </aside>
+
+        <!-- Right: card content -->
+        <div class="lg:col-span-2">
+          <!-- Panel: 숲 -->
+          <article id="panel-forest" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">숲</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="숲 재생" data-yt="VIDEO_ID_FOREST">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_FOREST/hqdefault.jpg" alt="숲 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                숲에 들어설 때마다 나무들은 저마다의 자리를 지키며 선명한 존재감을 드러낸다. 특히 소나무와 잣나무 숲 사이로 스며드는 빛과 바람, 솔잎의 향기는 언제나 마음을 맑게 한다. 이 곡은 그런 숲의 풍경을 통해 ‘자신의 자리를 묵묵히 지켜내는 이들의 삶’을 음악으로 비춘 작품이다. 2022년 기타 독주로 발표되었으며, 이번 무대에서는 바이올린과의 이중주로 연주된다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: 바다, 산 -->
+          <article id="panel-seamountain" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">바다, 산</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="바다, 산 재생" data-yt="VIDEO_ID_SEAMOUNTAIN">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_SEAMOUNTAIN/hqdefault.jpg" alt="바다, 산 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                산을 오르는 길은 늘 오르막과 내리막, 고요와 험난함이 교차한다. 짙은 그늘을 지나 다시 빛을 마주하는 순간, 인간은 자연의 풍경 속에서 자신의 삶을 비춰보게 된다. 이 곡은 그런 산행의 여정을 음악으로 옮긴 작품이다. 기타의 선율은 산길의 오르막과 내리막을 지나 정상에서 마주하는 빛을 노래하며, 삶의 굴곡 끝에 피어나는 성취와 희망을 상징한다. ‘바다’는 끝없이 반복되는 파도의 리듬을 따라 흐르는 곡이다. 파도는 매번 같은 자리로 밀려오지만, 그 울림 속에는 다채로운 빛깔의 위로가 숨어 있다. 오래 바라보고 있으면 어느새 한 가지 진실만을 고요히 되뇌는 듯하다. 끊임없이 다가오고 물러서는 파도의 숨결은, 삶을 버텨내는 우리에게 변치 않는 어떤 답을 속삭이며 마음을 다독인다. 두 곡은 여행과 일상에서 얻은 풍경을 음악으로 번역한 연작 ‘음악적 풍경(Musicscape)’의 일부로, 자연 속에 깃든 시간과 인간의 삶을 서정적으로 비춘 작품이다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: 서(書) -->
+          <article id="panel-seo" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">서(書)</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="서 재생" data-yt="VIDEO_ID_SEO">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_SEO/hqdefault.jpg" alt="서(書) 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                이 곡은 서예의 호흡과 필법, 그리고 그 안에 담긴 정신에서 출발한다. 각 섹션은 붓의 획이 이어지듯 변화하면서도 끊김 없이 이어지며, 다양한 주법은 먹의 농담과 필선의 기세를 음악으로 번역한다. 〈서〉는 작곡가 최인이 과거 예술의전당 서예박물관에서 열린 기획전 최치원전에 참여하며 탄생했다. 그는 여러 분야 예술가들과 함께 최치원의 삶과 정신을 연구하고 답사한 뒤, 각자의 작품을 선보였고, 그 과정에서 이 곡을 완성했다. 서예라는 우수한 우리 문화에 대한 헌정이자, 동시에 최치원의 삶과 정신을 담아낸 작품이다. 글을 쓰기 전 호흡을 가다듬고 마음을 곧게 세우는 선비들의 태도에서 깊은 감동을 받아, 이를 음악으로 표현하고자 했다. 곡 속에는 우리 전통문화의 깊은 정신성과 그것을 알리고자 하는 작곡가의 열망이 깃들어 있다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: 가던길 -->
+          <article id="panel-road" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">가던길</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="가던길 재생" data-yt="VIDEO_ID_ROAD">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_ROAD/hqdefault.jpg" alt="가던길 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                나그네가 길 위에서 만나는 풍경과 사람들, 그리고 다시 떠나야 하는 순간에서 영감을 얻은 곡이다. 여정은 경기에서 정선, 태백과 삼척으로 이어지지만, 이 길은 단순한 여행이 아니라 삶 그 자체의 은유이기도 하다. 만남과 이별, 기쁨과 슬픔, 삶의 희로애락이 길 위에서 교차한다. 메나리조 선율은 각 지역의 정서를 담아 흘러가며, 그 선율 속에서 여행길은 인생의 궤적처럼 깊이를 더한다. 피리와 기타의 대화는 서로 다른 세계가 만나 부딪히고 어우러지며, 전통과 현대가 교차하는 순간에 새로운 울림을 만들어낸다. 이 곡은 나그네가 걸어가는 길이 결국 우리의 삶과 다르지 않음을 보여준다. 익숙한 듯 낯선 선율은 관객에게 자기 삶의 여정을 비추어 보게 하고, 음악 속에서 잔잔한 위로와 깨달음을 남긴다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: 감포 앞 바다에서 -->
+          <article id="panel-gampo" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">감포 앞 바다에서</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="감포 앞 바다에서 재생" data-yt="VIDEO_ID_GAMPO">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_GAMPO/hqdefault.jpg" alt="감포 앞 바다에서 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                신라 문무대왕의 숨결이 남아 있는 감포 앞바다. 감은사지, 이견대, 문무대왕암을 답사하며 작곡된 이 곡은, 삼국통일을 완수한 왕이 “죽어서도 나라를 지키겠다”는 유언과 함께 동해의 바다에 잠든 정신에서 영감을 얻었다. 또한 모든 파도를 잠재운다는 전설 속의 피리 만파식적의 설화와도 맞닿아 있다. 최인은 이 곡을 원래 대금을 상상하며 썼으나, 후에 피리와의 이중주로 편곡하여 새로운 울림을 발견했다. 피리의 맑은 음색은 바람과 파도의 호흡을 닮아 있고, 기타의 깊이 있는 울림은 대지와 바다의 메아리를 담아낸다. 두 악기의 대화는 과거와 현재, 전통과 현대를 이어주며, 바다를 지키는 문무대왕의 정신과 평화의 염원을 다시 호명한다. 이 곡이 쓰여질 2017년 당시, 사회는 혼란과 분열로 크게 흔들리고 있었다. 작곡가는 감포 앞 바다를 바라보며, 모든 소란과 어지러움이 잠재워지고 평화와 나라의 안녕이 다시 깃들기를 바라는 마음을 담았다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: 석풍수 -->
+          <article id="panel-seokpungsoo" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">석풍수</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="석풍수 재생" data-yt="VIDEO_ID_SEOK">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_SEOK/hqdefault.jpg" alt="석풍수 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                건축가 이타미 준(유동룡)의 제주 건축 작품 〈석풍수〉에서 받은 인상으로 작곡된 곡이다. 하늘과 땅, 인간을 잇는 ‘천지인(天地人)’의 사상과 제주의 바람·돌·물의 요소가 건축에 스며든 장면에서 깊은 감명을 받았다. 이 곡은 건축이 품은 철학과 공간을 직접 체험한 감각을 음악으로 전환한 작품이다. 기타의 울림은 바람과 돌, 물의 감각을 담아내며, 자연과 인간, 그리고 사람을 귀하게 여기는 건축가와 음악가의 따뜻한 마음이 만나 하나의 서정적 풍경으로 그려진다. 클래식기타에 대한 깊은 이해를 바탕으로 쓰인 이 곡은 연주 기법적으로도 완성도가 높으며, 기타의 울림을 통해 제주의 풍경과 건축, 그리고 인간의 정신이 교차하는 순간을 경험하게 한다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: PRAYER -->
+          <article id="panel-prayer" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">PRAYER</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="PRAYER 재생" data-yt="VIDEO_ID_PRAYER">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_PRAYER/hqdefault.jpg" alt="PRAYER 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                전쟁과 갈등, 부패와 혼란으로 가득한 현실 속에서 평범한 사람들은 늘 불안 속에 살아간다. 이 곡은 그 혼란 속에서 살아가는 모두를 위한 기도다. 격렬한 외침 대신 고요한 음향 속에 간절한 바람을 담아, 음악이 곧 기도가 되는 순간을 구현한다. 개인의 작은 울림이 모여 세상 속에서 희망의 불씨가 되기를 바라는 마음을 담은 작품이다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: ISLAND -->
+          <article id="panel-island" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">ISLAND</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="ISLAND 재생" data-yt="VIDEO_ID_ISLAND">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_ISLAND/hqdefault.jpg" alt="ISLAND 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                서해의 섬들을 여행하며 얻은 인상에서 출발한 곡이다. 멀리서 바라본 외딴섬은 고독하고 외로워 보였으나, 막상 다가가면 길은 험난해도 곳곳마다 아름다운 비경과 생기 넘치는 식생들로 가득 차 있었다. 작곡가는 이 풍경 속에서 ‘아직 우리 마음속에 남아 있는 먼 대상, 아직 가보지 못한 또 다른 섬은 무엇일까’라는 질문을 떠올렸다. 〈섬〉은 고독과 편견, 낯섦에서 새로운 이해와 아름다움을 발견해 가는 과정을 음악으로 담아낸 작품이다. 특히 이 곡이 쓰여진 것은 코로나 시기였다. 모두가 섬처럼 고립되고 외로웠던 그 시간, 서로에게 다가가기가 더욱 어려웠던 경험은 곡의 정서와 겹쳐진다. 작곡가는 섬을 여행하며 마주한 풍경을 빗대어, 고립 속에서도 여전히 살아 숨 쉬는 생명력과 아직 경험하지 못한 가능성의 세계를 노래했다.
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel: FROM HERE TO EVERYWHERE... -->
+          <article id="panel-fhte" class="tp-panel hidden border border-white/10 rounded-2xl p-4">
+            <header class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">FROM HERE TO EVERYWHERE...</h3>
+            </header>
+            <div class="mt-4">
+              <div class="yt-lazy" role="button" aria-label="FROM HERE TO EVERYWHERE 재생" data-yt="VIDEO_ID_FHTE">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_FHTE/hqdefault.jpg" alt="FHtE 썸네일" />
+                <div class="yt-play" aria-hidden="true"></div>
+              </div>
+              <div class="mt-4 text-zinc-300 leading-relaxed">
+                끊임없는 경쟁과 외적 기준 속에서 우리는 종종 내적인 평온과 작은 사랑의 마음을 잊곤 한다. 이 곡은 외부의 소음이 아닌 내면의 고요와 평화가 울려 퍼지기를 바라는 마음에서 쓰였다. 산길을 걷다 마주했던 어느 순간, 산중턱에 홀로 피어 있던 한 송이 민들레와 곧이어 만난 산비탈을 가득 메운 노란 민들레 군락이 이 곡의 영감이 되었다. 음악은 한 사람의 마음에서 시작된 작은 소망이 바람을 타고 멀리 퍼져나가 뿌리내리는 모습을 담아낸다. 기타와 바이올린의 선율은 서로를 감싸며 개인의 울림이 세상으로 확장되는 가능성을 노래한다. 작품의 제목처럼, ‘이곳에서부터 어디로든’ 이어지는 길 위에 음악의 희망과 사랑의 메시지가 놓여 있다.
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== MODALS (인천 · 곡별 영상 + 사진 슬라이드) ====== -->
+  
+  <!-- Modal: 숲 -->
+  <div id="modal-forest" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="forest">
+            <div class="slider-item"><img src="assets/images/forest_1.webp" class="w-full h-64 object-cover" alt="숲 1" /></div>
+            <div class="slider-item"><img src="assets/images/forest_2.webp" class="w-full h-64 object-cover" alt="숲 2" /></div>
+            <div class="slider-item"><img src="assets/images/forest_3.webp" class="w-full h-64 object-cover" alt="숲 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="forest">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="forest">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="숲 재생" data-yt="VIDEO_ID_FOREST">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_FOREST/hqdefault.jpg" alt="숲 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>숲에 들어설 때마다 나무들이 지키는 자리와 빛·바람·향기를 음악으로 비춘 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 바다, 산 -->
+  <div id="modal-sea-mountain" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="seamountain">
+            <div class="slider-item"><img src="assets/images/seamountain_1.webp" class="w-full h-64 object-cover" alt="바다, 산 1" /></div>
+            <div class="slider-item"><img src="assets/images/seamountain_2.webp" class="w-full h-64 object-cover" alt="바다, 산 2" /></div>
+            <div class="slider-item"><img src="assets/images/seamountain_3.webp" class="w-full h-64 object-cover" alt="바다, 산 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="seamountain">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="seamountain">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="바다, 산 재생" data-yt="VIDEO_ID_SEAMOUNTAIN">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_SEAMOUNTAIN/hqdefault.jpg" alt="바다, 산 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>산행의 여정과 파도의 리듬에서 영감을 받은 두 곡을 연작으로 묶어 구성했습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 서(書) -->
+  <div id="modal-seo" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="seo">
+            <div class="slider-item"><img src="assets/images/seo_1.webp" class="w-full h-64 object-cover" alt="서 1" /></div>
+            <div class="slider-item"><img src="assets/images/seo_2.webp" class="w-full h-64 object-cover" alt="서 2" /></div>
+            <div class="slider-item"><img src="assets/images/seo_3.webp" class="w-full h-64 object-cover" alt="서 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="seo">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="seo">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="서 재생" data-yt="VIDEO_ID_SEO">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_SEO/hqdefault.jpg" alt="서(書) 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>서예의 호흡과 필선을 음악적으로 번역한 작품으로, 예술의전당 서예박물관 기획전 경험을 바탕으로 쓰였습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 가던길 -->
+  <div id="modal-road" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="road">
+            <div class="slider-item"><img src="assets/images/road_1.webp" class="w-full h-64 object-cover" alt="가던길 1" /></div>
+            <div class="slider-item"><img src="assets/images/road_2.webp" class="w-full h-64 object-cover" alt="가던길 2" /></div>
+            <div class="slider-item"><img src="assets/images/road_3.webp" class="w-full h-64 object-cover" alt="가던길 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="road">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="road">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="가던길 재생" data-yt="VIDEO_ID_ROAD">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_ROAD/hqdefault.jpg" alt="가던길 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>나그네의 여정과 메나리조 선율의 변주로 구성된 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 감포 앞 바다에서 -->
+  <div id="modal-gampo" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="gampo">
+            <div class="slider-item"><img src="assets/images/gampo_1.webp" class="w-full h-64 object-cover" alt="감포 앞 바다에서 1" /></div>
+            <div class="slider-item"><img src="assets/images/gampo_2.webp" class="w-full h-64 object-cover" alt="감포 앞 바다에서 2" /></div>
+            <div class="slider-item"><img src="assets/images/gampo_3.webp" class="w-full h-64 object-cover" alt="감포 앞 바다에서 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="gampo">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="gampo">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="감포 앞 바다에서 재생" data-yt="VIDEO_ID_GAMPO">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_GAMPO/hqdefault.jpg" alt="감포 앞 바다에서 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>문무대왕의 정신과 만파식적 설화에서 영감을 받은 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 석풍수 -->
+  <div id="modal-seokpungsoo" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="seokpungsoo">
+            <div class="slider-item"><img src="assets/images/seokpungsoo_1.webp" class="w-full h-64 object-cover" alt="석풍수 1" /></div>
+            <div class="slider-item"><img src="assets/images/seokpungsoo_2.webp" class="w-full h-64 object-cover" alt="석풍수 2" /></div>
+            <div class="slider-item"><img src="assets/images/seokpungsoo_3.webp" class="w-full h-64 object-cover" alt="석풍수 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="seokpungsoo">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="seokpungsoo">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="석풍수 재생" data-yt="VIDEO_ID_SEOK">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_SEOK/hqdefault.jpg" alt="석풍수 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>이타미 준의 제주 건축 〈석풍수〉에서 받은 인상을 음악으로 전환한 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: PRAYER -->
+  <div id="modal-prayer" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="prayer">
+            <div class="slider-item"><img src="assets/images/prayer_1.webp" class="w-full h-64 object-cover" alt="PRAYER 1" /></div>
+            <div class="slider-item"><img src="assets/images/prayer_2.webp" class="w-full h-64 object-cover" alt="PRAYER 2" /></div>
+            <div class="slider-item"><img src="assets/images/prayer_3.webp" class="w-full h-64 object-cover" alt="PRAYER 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="prayer">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="prayer">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="PRAYER 재생" data-yt="VIDEO_ID_PRAYER">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_PRAYER/hqdefault.jpg" alt="PRAYER 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>혼란 속 모두를 위한 고요한 기도를 음악으로 구현한 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: ISLAND -->
+  <div id="modal-island" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="island">
+            <div class="slider-item"><img src="assets/images/island_1.webp" class="w-full h-64 object-cover" alt="ISLAND 1" /></div>
+            <div class="slider-item"><img src="assets/images/island_2.webp" class="w-full h-64 object-cover" alt="ISLAND 2" /></div>
+            <div class="slider-item"><img src="assets/images/island_3.webp" class="w-full h-64 object-cover" alt="ISLAND 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="island">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="island">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="ISLAND 재생" data-yt="VIDEO_ID_ISLAND">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_ISLAND/hqdefault.jpg" alt="ISLAND 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>고립과 낯섦 속에서 발견하는 이해와 아름다움을 노래하는 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: FROM HERE TO EVERYWHERE... -->
+  <div id="modal-fhte" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="fhte">
+            <div class="slider-item"><img src="assets/images/fhte_1.webp" class="w-full h-64 object-cover" alt="FHtE 1" /></div>
+            <div class="slider-item"><img src="assets/images/fhte_2.webp" class="w-full h-64 object-cover" alt="FHtE 2" /></div>
+            <div class="slider-item"><img src="assets/images/fhte_3.webp" class="w-full h-64 object-cover" alt="FHtE 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="fhte">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="fhte">▶</button>
+        </div>
+        <div class="yt-lazy" role="button" aria-label="FROM HERE TO EVERYWHERE 재생" data-yt="VIDEO_ID_FHTE">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_FHTE/hqdefault.jpg" alt="FHtE 썸네일" />
+          <div class="yt-play" aria-hidden="true"></div>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>한 사람의 작은 소망이 바람을 타고 멀리 퍼져나가는 이미지를 음악으로 그린 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <section id="poster" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl sm:text-3xl font-semibold">Poster & Gallery</h2>
+      
+      <!-- Poster -->
+      <div class="mt-6">
+        <h3 class="text-lg font-medium text-zinc-200">Poster</h3>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <a href="assets/images/$1.webp" data-lightbox class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
+            <img src="assets/images/poster_main.webp" alt="Poster" class="w-full h-96 object-cover" />
+          </a>
+        </div>
+        <p class="mt-2 text-xs text-zinc-400">파일명: <code>assets/images/poster_main.webp</code></p>
+      </div>
+
+      <!-- Track Galleries (각 곡 5장) -->
+      <div class="mt-10 space-y-10">
+        <!-- 숲 -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">숲 · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/forest_1.webp</code> ~ <code>forest_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/forest_1.webp" alt="forest 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/forest_2.webp" alt="forest 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/forest_3.webp" alt="forest 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/forest_4.webp" alt="forest 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/forest_5.webp" alt="forest 5" /></a>
+          </div>
+        </div>
+
+        <!-- 바다, 산 -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">바다, 산 · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/seamountain_1.webp</code> ~ <code>seamountain_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seamountain_1.webp" alt="seamountain 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seamountain_2.webp" alt="seamountain 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seamountain_3.webp" alt="seamountain 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seamountain_4.webp" alt="seamountain 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seamountain_5.webp" alt="seamountain 5" /></a>
+          </div>
+        </div>
+
+        <!-- 서(書) -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">서(書) · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/seo_1.webp</code> ~ <code>seo_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seo_1.webp" alt="seo 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seo_2.webp" alt="seo 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seo_3.webp" alt="seo 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seo_4.webp" alt="seo 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seo_5.webp" alt="seo 5" /></a>
+          </div>
+        </div>
+
+        <!-- 가던길 -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">가던길 · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/road_1.webp</code> ~ <code>road_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/road_1.webp" alt="road 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/road_2.webp" alt="road 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/road_3.webp" alt="road 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/road_4.webp" alt="road 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/road_5.webp" alt="road 5" /></a>
+          </div>
+        </div>
+
+        <!-- 감포 앞 바다에서 -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">감포 앞 바다에서 · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/gampo_1.webp</code> ~ <code>gampo_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/gampo_1.webp" alt="gampo 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/gampo_2.webp" alt="gampo 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/gampo_3.webp" alt="gampo 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/gampo_4.webp" alt="gampo 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/gampo_5.webp" alt="gampo 5" /></a>
+          </div>
+        </div>
+
+        <!-- 석풍수 -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">석풍수 · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/seokpungsoo_1.webp</code> ~ <code>seokpungsoo_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seokpungsoo_1.webp" alt="seokpungsoo 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seokpungsoo_2.webp" alt="seokpungsoo 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seokpungsoo_3.webp" alt="seokpungsoo 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seokpungsoo_4.webp" alt="seokpungsoo 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/seokpungsoo_5.webp" alt="seokpungsoo 5" /></a>
+          </div>
+        </div>
+
+        <!-- PRAYER -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">PRAYER · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/prayer_1.webp</code> ~ <code>prayer_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/prayer_1.webp" alt="prayer 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/prayer_2.webp" alt="prayer 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/prayer_3.webp" alt="prayer 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/prayer_4.webp" alt="prayer 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/prayer_5.webp" alt="prayer 5" /></a>
+          </div>
+        </div>
+
+        <!-- ISLAND -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">ISLAND · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/island_1.webp</code> ~ <code>island_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/island_1.webp" alt="island 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/island_2.webp" alt="island 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/island_3.webp" alt="island 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/island_4.webp" alt="island 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/island_5.webp" alt="island 5" /></a>
+          </div>
+        </div>
+
+        <!-- FROM HERE TO EVERYWHERE... -->
+        <div>
+          <h3 class="text-lg font-medium text-zinc-200">FROM HERE TO EVERYWHERE... · Gallery (5)</h3>
+          <p class="text-xs text-zinc-400">파일명: <code>assets/images/fhte_1.webp</code> ~ <code>fhte_5.webp</code></p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/fhte_1.webp" alt="fhte 1" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/fhte_2.webp" alt="fhte 2" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/fhte_3.webp" alt="fhte 3" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/fhte_4.webp" alt="fhte 4" /></a>
+            <a href="assets/images/$1.webp" data-lightbox><img class="w-full h-36 object-cover rounded-xl border border-white/10" src="assets/images/fhte_5.webp" alt="fhte 5" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PRESS (4번 섹션 – 미니멀 리스트: 제목 / 채널 / 날짜) ====== -->
+  <section id="press" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl sm:text-3xl font-semibold">Press</h2>
+      <ul class="mt-6 divide-y divide-white/10">
+        <!-- 항목 템플릿: a 태그 전체 클릭 이동, 카드 없음 / 미니멀 -->
+        <li>
+          <a href="https://news.example.com/article-1" target="_blank" class="block py-3 hover:bg-white/5 rounded-lg px-2">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span class="font-medium">“빛과 그림자의 경계, 몰입형 음악의 새로운 질감”</span>
+              <span class="text-sm text-zinc-400">The Culture Times · 2025-12-03</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="https://news.example.com/article-2" target="_blank" class="block py-3 hover:bg-white/5 rounded-lg px-2">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span class="font-medium">예술의전당 자유소극장 ‘그림자의 경계에서’ 리뷰</span>
+              <span class="text-sm text-zinc-400">Art & Sound · 2025-12-05</span>
+            </div>
+          </a>
+        </li>
+        <!-- 필요 시 계속 추가 -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====== LIGHTBOX (공통) ====== -->
+  <div id="lightbox" class="lb-modal" role="dialog" aria-modal="true" aria-label="image viewer">
+    <div class="lb-stage">
+      <img id="lbImg" class="lb-img" alt="lightbox image" />
+      <div class="lb-toolbar">
+        <button id="lbZoomIn" class="lb-btn">＋</button>
+        <button id="lbZoomOut" class="lb-btn">－</button>
+        <button id="lbFit" class="lb-btn">Fit</button>
+        <button id="lbClose" class="lb-btn">×</button>
+      </div>
+      <div id="lbMeta" class="lb-meta"></div>
+    </div>
+  </div>
+
+  <!-- ====== CREDITS / FOOTER ====== -->
+  <footer class="py-10 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4 text-sm text-zinc-400">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div>© 2025 Fischerinsel Art Management</div>
+        <div class="space-x-4">
+          <a class="hover:text-white" href="#">Instagram</a>
+          <a class="hover:text-white" href="#">YouTube</a>
+          <a class="hover:text-white" href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script>
+        // Toggle chapters
+    const toggleChapters = document.getElementById('toggleChapters');
+    const chapters = document.getElementById('chapters');
+    if (toggleChapters && chapters) {
+      toggleChapters.addEventListener('click', () => {
+        chapters.classList.toggle('hidden');
+      });
+    }
+
+    // ===== Modal handling =====
+    const openModal = (id) => {
+      const m = document.getElementById(id);
+      if (!m) return;
+      m.classList.add('open');
+    };
+    const closeModal = (modalEl) => {
+      // 정리: 유튜브 플레이어 정지
+      const frame = modalEl.querySelector('iframe');
+      if (frame) {
+        frame.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'pauseVideo'}), '*');
+      }
+      modalEl.classList.remove('open');
+    };
+
+    // Open
+    document.querySelectorAll('[data-modal-target]')?.forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.getAttribute('data-modal-target')));
+    });
+    // Close buttons
+    document.querySelectorAll('.modal [data-close]')?.forEach(btn => {
+      btn.addEventListener('click', (e) => closeModal(e.target.closest('.modal')));
+    });
+    // Close on backdrop click
+    document.querySelectorAll('.modal')?.forEach(m => {
+      m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); });
+    });
+
+    // ===== Simple slider (per modal) =====
+    const sliderState = {};
+    const updateSlider = (n) => {
+      const track = document.querySelector(`[data-slider-track="${n}"]`);
+      if (!track) return;
+      const count = track.children.length;
+      sliderState[n] = (sliderState[n] ?? 0 + count) % count; // ensure exists
+      const idx = sliderState[n];
+      track.style.transform = `translateX(-${idx * 100}%)`;
+    };
+    document.querySelectorAll('[data-next]')?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const n = btn.getAttribute('data-next');
+        const track = document.querySelector(`[data-slider-track="${n}"]`);
+        if (!track) return;
+        const count = track.children.length;
+        sliderState[n] = ((sliderState[n] ?? 0) + 1) % count;
+        updateSlider(n);
+      });
+    });
+    document.querySelectorAll('[data-prev]')?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const n = btn.getAttribute('data-prev');
+        const track = document.querySelector(`[data-slider-track="${n}"]`);
+        if (!track) return;
+        const count = track.children.length;
+        sliderState[n] = ((sliderState[n] ?? 0) - 1 + count) % count;
+        updateSlider(n);
+      });
+    });
+
+    // Init all sliders at 0
+    document.querySelectorAll('[data-slider-track]')?.forEach(track => {
+      const n = track.getAttribute('data-slider-track');
+      sliderState[n] = 0; updateSlider(n);
+    });
+  </script>
+</body>
+</html>
