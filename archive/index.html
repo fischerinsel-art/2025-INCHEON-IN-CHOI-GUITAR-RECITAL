@@ -115,6 +115,10 @@
   #tracks-program .grid{display:none}/* 기존 3컬럼 그리드 숨김 */
   #tracks-mobile{display:block}      /* 모바일 카드형 표시 */
 }
+.thumb[data-full*="seamountain_03"] {
+  object-fit: contain;   /* 세로 사진 비율 유지 */
+  background-color: #000; /* 검은 배경으로 여백 메우기 */
+}
 
   </style>
 </head>
@@ -170,7 +174,7 @@
   <!-- 제목 블록: 사진 아래로 분리 -->
   <section class="py-10">
     <div class="mx-auto max-w-6xl px-4">
-      <h1 class="leading-[1.15] tracking-tight"
+      <h1 class="leading-[2.3] tracking-tight"
           style="font-family:'Helvetica Neue',Helvetica,Arial,'Noto Sans KR',ui-sans-serif;">
         <span class="block text-2xl sm:text-4xl md:text-5xl font-[650]">IN CHOI GUITAR RECITAL</span>
         <span class="block mt-2 text-2xl sm:text-4xl md:text-5xl font-[650]">MUSICSCAPE</span>
@@ -375,6 +379,34 @@
     <div class="mx-auto max-w-6xl px-4">
       <h2 class="text-2xl sm:text-3xl font-semibold">Press & Media</h2>
       <ul id="pressList" class="mt-6 space-y-2">
+        <li class="border border-white/10 rounded-lg">
+  <a href="https://www.newswire.co.kr/newsRead.php?no=1019214" target="_blank" 
+     class="flex items-center justify-between px-3 py-2 hover:bg-white/5">
+    <span class="truncate">
+      인천문화재단, ‘FROM HERE TO EVERYWHERE’ 기타리스트 최인 리사이틀 개최
+    </span>
+    <span class="text-sm text-zinc-400 shrink-0 ml-3">뉴스와이어 · 2025-10-28</span>
+  </a>
+</li>
+<li class="border border-white/10 rounded-lg">
+  <a href="https://www.ikoreanspirit.com/news/articleView.html?idxno=81976" target="_blank"
+     class="flex items-center justify-between px-3 py-2 hover:bg-white/5">
+    <span class="truncate">
+      최인의 기타가 그리는 서사 – 자연과 역사, 그리고 철학의 울림
+    </span>
+    <span class="text-sm text-zinc-400 shrink-0 ml-3">The Korean Spirit · 2025-10-20</span>
+  </a>
+</li>
+<li class="border border-white/10 rounded-lg">
+  <a href="https://www.sisa-news.com/news/article.html?no=259880" target="_blank"
+     class="flex items-center justify-between px-3 py-2 hover:bg-white/5">
+    <span class="truncate">
+      최인의 기타 리사이틀 개최... 클래식 기타를 중심으로 바이올린과 피리가 더해져
+    </span>
+    <span class="text-sm text-zinc-400 shrink-0 ml-3">시사뉴스 · 2025-9-22</span>
+  </a>
+</li>        
+
         <!-- 예시 형식:
         <li class="border border-white/10 rounded-lg">
           <a href="기사URL" target="_blank" class="flex items-center justify-between px-3 py-2 hover:bg-white/5">
@@ -551,6 +583,13 @@
 
   wrap.innerHTML = cards;
 })();
+
+    document.addEventListener('error', e => {
+  if (e.target.tagName === 'IMG' && e.target.classList.contains('thumb')) {
+    e.target.remove();  // 깨진 이미지 자동 제거
+  }
+}, true);
+
 </script>
 
 
