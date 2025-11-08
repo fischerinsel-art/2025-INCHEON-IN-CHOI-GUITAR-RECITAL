@@ -52,9 +52,10 @@
 .hero{position:relative;min-height:92vh;display:flex;align-items:end}
 .hero-slides{position:absolute;inset:0;overflow:hidden}
 .hero-slides img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;opacity:0;
-  animation:heroFade 36s ease-in-out infinite;
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:contain;   /* ✅ 전체 이미지가 보이게 */
+  background:#000;      /* 레터박스 여백을 자연스럽게(검은 배경) */
+  opacity:0; animation:heroFade 36s ease-in-out infinite;
 }
 /* 9장 지연 시간: 0s, 4s, 8s ... 32s */
 .hero-slides img:nth-child(1){animation-delay:0s}
@@ -67,6 +68,19 @@
 .hero-slides img:nth-child(8){animation-delay:28s}
 .hero-slides img:nth-child(9){animation-delay:32s}
 
+.hero-wrap{
+  max-width:750px;   /* ✅ Featured/Full과 동일한 최대폭 */
+  margin:0 auto;
+  padding:0 1rem;
+}    
+.hero-box{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;   /* ✅ 가로폭 변화에 맞춰 세로 자동 조절(16:9) */
+  border-radius:16px; overflow:hidden; background:#000;
+}
+
+    
 /* 한 장당: 0.5s 페이드인 → 3.5s 유지 → 0.5s 페이드아웃 (총 4s 창) */
 @keyframes heroFade{
   0%{opacity:0}
@@ -95,6 +109,12 @@
 .lightbox.open{display:flex}
 .lightbox img{max-width:95vw;max-height:90vh;border-radius:10px}
 .lightbox button{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:8px;padding:8px 10px}
+/* 모바일 전용 카드형 트랙 리스트 */
+#tracks-mobile{display:none}
+@media (max-width:1023px){           /* lg 미만 = 모바일/태블릿 */
+  #tracks-program .grid{display:none}/* 기존 3컬럼 그리드 숨김 */
+  #tracks-mobile{display:block}      /* 모바일 카드형 표시 */
+}
 
   </style>
 </head>
@@ -196,6 +216,9 @@
   <!-- ========= 여기부터 원래 페이지 섹션(곡/설명) ========= -->
   <section id="tracks-program" class="py-20 border-top border-white/10">
     <div class="mx-auto max-w-6xl px-4">
+      <!-- 모바일 전용: 섬네일 바로 아래에 설명 붙는 카드형 -->
+<div id="tracks-mobile" class="mt-8 space-y-6"><!-- JS로 렌더링 --></div>
+
       <h2 class="text-2xl sm:text-3xl font-semibold">Tracks · Program</h2>
       <p class="mt-2 text-zinc-400">왼쪽에서 곡을 선택하면 오른쪽에서 설명을 볼 수 있습니다. (곡 영상은 추후 업데이트)</p>
 
@@ -486,6 +509,49 @@
     }
   });
 </script>
+  <script>
+/* 모바일 카드형 생성: 기존 패널(설명) 내용을 재사용해서
+   각 섬네일 아래에 설명을 붙인 카드로 렌더링 */
+(function(){
+  const wrap = document.getElementById('tracks-mobile');
+  if(!wrap) return;
+
+  // 트랙 목록: 기존에 쓰던 것과 동일하게 맞춰줘
+  const TRACKS = [
+    {id:"forest", title:"숲"},
+    {id:"seamountain", title:"바다, 산"},
+    {id:"seo", title:"서(書)"},
+    {id:"road", title:"가던길"},
+    {id:"gampo", title:"감포 앞 바다에서"},
+    {id:"seokpungsoo", title:"석풍수"},
+    {id:"prayer", title:"PRAYER"},
+    {id:"island", title:"ISLAND"},
+    {id:"fhte", title:"FROM HERE TO EVERYWHERE..."},
+    // 앵콜 추가했으면 여기도 넣기
+    {id:"bluehour", title:"Blue Hour (Encore)"}
+  ];
+
+  // 각 패널의 본문 HTML을 읽어 카드로 구성
+  const cards = TRACKS.map(tr=>{
+    const panel = document.getElementById(`panel-${tr.id}`);
+    if(!panel) return ''; // 패널이 없으면 건너뜀
+    const bodyHTML = panel.querySelector('.mt-4') ? panel.querySelector('.mt-4').outerHTML : '';
+    const thumb = `./images/${tr.id}_01.webp`;  // 갤러리 1번 사진을 섬네일로
+    return `
+      <article class="border border-white/10 rounded-2xl overflow-hidden">
+        <img src="${thumb}" alt="${tr.title}" class="w-full aspect-[16/9] object-cover">
+        <div class="p-4">
+          <h3 class="text-lg font-semibold">${tr.title}</h3>
+          ${bodyHTML || ''}
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  wrap.innerHTML = cards;
+})();
+</script>
+
 
 </body>
 </html>
