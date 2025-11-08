@@ -119,6 +119,15 @@
   object-fit: contain;   /* 세로 사진 비율 유지 */
   background-color: #000; /* 검은 배경으로 여백 메우기 */
 }
+/* EXIF 회전 정보 존중 (지원 브라우저에서 자동 보정) */
+img { image-orientation: from-image; }
+
+/* seamountain_03만 예외 처리: 세로 유지(썸네일/라이트박스 모두) */
+.thumb[src*="seamountain_03"], .lightbox img[src*="seamountain_03"]{
+  object-fit: contain;
+  background:#000;
+  transform: rotate(90deg); /* 필요 시 보정 (원본이 가로로 저장된 경우) */
+}
 
   </style>
 </head>
@@ -353,32 +362,32 @@
 <section id="poster-gallery" class="py-16 border-t border-white/10">
   <div class="mx-auto max-w-6xl px-4">
     <h2 class="text-2xl sm:text-3xl font-semibold">Poster & Performance Images</h2>
+<!-- Poster & Promo (한 그리드로) -->
+<div class="mt-6">
+  <h3 class="text-lg font-medium text-zinc-200">Poster & Promo</h3>
+  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Poster 카드 -->
+    <a href="./images/poster.jpg" target="_blank"
+       class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
+      <img src="./images/poster.jpg" alt="Poster" class="w-full h-96 object-cover"/>
+    </a>
 
-    <!-- Poster -->
-    <div class="mt-6">
-      <h3 class="text-lg font-medium text-zinc-200">Poster</h3>
-      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a href="./images/poster.jpg" target="_blank" class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
-          <img src="./images/poster.jpg" alt="Poster" class="w-full h-96 object-cover"/>
-        </a>
-      </div>
-    </div>
-
-
-    <!-- 홍보영상 카드 -->
-    <div class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
+    <!-- Promo Video 카드 (포스터와 동일한 카드 스타일) -->
+    <div class="border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
       <div class="media" style="--ratio:16/9;">
         <iframe
-          src="https://youtu.be/4tJQ3M9aYaQ?si=SOX01gOQ8ExzUWqN?rel=0&modestbranding=1"
+          src="https://www.youtube.com/embed/4tJQ3M9aYaQ?rel=0&modestbranding=1"
           title="Promo Video — FROM HERE TO EVERYWHERE"
           allowfullscreen></iframe>
       </div>
       <div class="p-4">
         <h4 class="text-lg font-semibold">Promo Video</h4>
-        <p class="mt-2 text-zinc-300 text-sm">
-          공식 홍보영상
-        </p>
+        <p class="mt-2 text-zinc-300 text-sm">공식 홍보영상</p>
       </div>
+    </div>
+  </div>
+</div>
+
     </div>
   </div>
 </div>
@@ -519,7 +528,7 @@
     {id:"prayer", title:"PRAYER"},
     {id:"island", title:"ISLAND"},
     {id:"fhte", title:"FROM HERE TO EVERYWHERE..."},
-     {id:"fhte", title:"BLUEHOUR (ENCORE)"},
+     {id:"bluehour", title:"Blue Hour (ENCORE)"},
   ];
   const perfWrap = document.getElementById('perfGallery');
 
