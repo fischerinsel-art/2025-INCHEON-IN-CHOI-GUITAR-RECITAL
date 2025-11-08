@@ -1,18 +1,613 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive – Coming Soon</title>
-  </head>
-  <body style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;background:#f5f5f5;">
-    <div style="text-align:center;">
-      <h1>🎬 2025 IN CHOI GUITAR RECIAL 'From here to everywhere' 인천공연 2025.10.25. 인천중구문화회관 공연장 아카이브</h1>
-      <p>공연 영상 및 기록은 공연 종료 후 업로드될 예정입니다.<br>(Coming Soon)</p>
-      <a href="https://2025incheon.fischerinsel-art.com" 
-       style="display:inline-block;margin-top:20px;padding:12px 24px;background:#222;color:white;text-decoration:none;border-radius:8px;">
-       🔗 공연 홍보페이지 바로가기
-    </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FROM HERE TO EVERYWHERE — Incheon 2025 · Archive</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Smooth fade */
+    .fade-enter { opacity: 0; transform: translateY(8px); }
+    .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 400ms, transform 400ms; }
+    /* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; z-index: 50; }
+    .modal.open { display: flex; }
+    /* Slider */
+    .slider-track { display: flex; transition: transform 300ms ease; }
+    .slider-item { min-width: 100%; }
+    /*/* Aspect helpers */$1
+    /* ===== HERO CSS FADE SLIDES ===== */
+    .hero-slides { position: absolute; inset: 0; overflow: hidden; }
+    .hero-slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: heroFade 36s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+    .hero-slides img:nth-child(1)  { animation-delay: 0s; }
+    .hero-slides img:nth-child(2)  { animation-delay: 4s; }
+    .hero-slides img:nth-child(3)  { animation-delay: 8s; }
+    .hero-slides img:nth-child(4)  { animation-delay: 12s; }
+    .hero-slides img:nth-child(5)  { animation-delay: 16s; }
+    .hero-slides img:nth-child(6)  { animation-delay: 20s; }
+    .hero-slides img:nth-child(7)  { animation-delay: 24s; }
+    .hero-slides img:nth-child(8)  { animation-delay: 28s; }
+    .hero-slides img:nth-child(9)  { animation-delay: 32s; }
+
+    @keyframes heroFade {
+      0%   { opacity: 0; }
+      5%   { opacity: 1; }
+      11%  { opacity: 1; }
+      16%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-black text-white antialiased selection:bg-white/20 selection:text-white">
+  <!-- ====== NAV / SWITCH (인천 <-> SAC) ====== -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-black/50 backdrop-blur border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <a href="#" class="font-semibold tracking-wide">Fischerinsel Archive</a>
+      <nav class="space-x-3 text-sm text-zinc-300">
+        <!-- 필요한 실제 경로로 교체하세요 -->
+        <a class="hover:text-white" href="https://2025incheon.fischerinsel-art.com/">2025 Incheon</a>
+        <span class="text-zinc-600">/</span>
+        <a class="hover:text-white" href="https://2025sac.musicscape.fischerinsel-art.com/">2025 SAC</a>
+      </nav>
     </div>
-  </body>
+  </header>
+
+  <!-- ====== HERO (CSS Fade Slideshow + CTA) ====== -->
+  <section class="relative min-h-[92vh] flex items-end" id="hero">
+    <!-- CSS fade slideshow (5 images) -->
+    <div class="hero-slides">
+      <img src="assets/images/hero_1.jpg" alt="Hero 1" />
+      <img src="assets/images/hero_2.jpg" alt="Hero 2" />
+      <img src="assets/images/hero_3.jpg" alt="Hero 3" />
+      <img src="assets/images/hero_4.jpg" alt="Hero 4" />
+      <img src="assets/images/hero_5.jpg" alt="Hero 5" />
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
+    <div class="relative z-10 mx-auto max-w-6xl w-full px-4 pb-16">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-5xl font-semibold leading-tight">
+          <span class="block">FROM HERE TO EVERYWHERE</span>
+          <span class="block">In Choi Guitar Recital</span>
+        </h1>
+        <p class="mt-3 text-zinc-300">인천 중구문화회관 · 2025-10-25</p>
+        <div class="mt-3 text-sm text-zinc-300/90">
+          <span class="mr-2 text-zinc-400">주관</span> 피셔인젤 예술기획
+          <span class="mx-3 text-zinc-600">|</span>
+          <span class="mr-2 text-zinc-400">후원</span> 인천광역시, 인천문화재단, 이용한기타, 광주현대병원
+        </div>
+        <p class="mt-4 text-zinc-200/90 italic">최인이 바라본 음악적 풍경<br class="sm:hidden"/>
+        <span class="not-italic">음악·영상·공간이 교차하는 순간, 관객은 다른 세계로 이동하는 듯한 몰입을 경험한다.</span></p>
+        <div class="mt-6 flex items-center gap-3">
+          <a href="#full" class="inline-flex items-center rounded-2xl px-5 py-3 bg-white text-black font-medium hover:bg-zinc-200">Watch Full Performance</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FEATURED HIGHLIGHT (신규 섹션 · Full 위) ====== -->
+  <section id="featured" class="relative py-20 border-t border-white/10">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl sm:text-3xl font-semibold">Featured Highlight</h2>
+        <div class="text-sm text-zinc-400">대표 하이라이트</div>
+      </div>
+
+      <div class="mt-6 relative rounded-2xl overflow-hidden border border-white/10">
+        <div class="aspect-hero">
+          <iframe id="highlightPlayer" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_HL?enablejsapi=1&rel=0" title="Highlight video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="mt-4 flex items-center justify-between gap-4 text-sm text-zinc-300">
+        <p>인천 공연의 대표 하이라이트 영상입니다. 아래 카드에서 곡별 영상과 사진을 확인하세요.</p>
+        <a href="#tracks" class="inline-flex items-center rounded-xl px-4 py-2 border border-white/10 hover:bg-white/10">See all tracks ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FULL PERFORMANCE (2번 섹션) ====== -->
+  <section id="full" class="relative py-20 border-t border-white/10">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl sm:text-3xl font-semibold">Full Performance</h2>
+        <div class="text-sm text-zinc-400">총 러닝타임 00:00:00</div>
+      </div>
+
+      <div class="mt-6 relative rounded-2xl overflow-hidden border border-white/10">
+        <div class="aspect-hero">
+          <iframe id="fullPlayer" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_FULL?enablejsapi=1&rel=0" title="Full performance — Incheon 2025" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="mt-6 grid sm:grid-cols-3 gap-6">
+        <div class="sm:col-span-2 text-zinc-300 leading-relaxed">
+          <p>‘From Here to Everywhere’ 인천 실황 영상입니다. 아래 <strong>Tracks</strong>에서 곡별 사진 슬라이드와 개별 영상을 확인할 수 있습니다.</p>
+        </div>
+        <div class="sm:col-span-1">
+          <button id="toggleChapters" class="w-full rounded-xl border border-white/10 px-4 py-3 hover:bg-white/10">Chapters (타임스탬프)</button>
+          <ul id="chapters" class="hidden mt-3 space-y-2 text-sm text-zinc-300">
+            <!-- 실제 타임스탬프로 교체하세요 -->
+            <li><a class="hover:text-white" href="https://youtu.be/VIDEO_ID_FULL?t=0" target="_blank">00:00 – 숲</a></li>
+            <li><a class="hover:text-white" href="https://youtu.be/VIDEO_ID_FULL?t=0" target="_blank">--:-- – 바다, 산</a></li>
+            <li><a class="hover:text-white" href="https://youtu.be/VIDEO_ID_FULL?t=0" target="_blank">--:-- – 서(書)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== TRACKS (작은 카드 · 모달 + 슬라이드 재사용) ====== -->
+  <section id="tracks" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl sm:text-3xl font-semibold">Tracks</h2>
+      <p class="mt-2 text-zinc-400">인천 실황의 곡들을 썸네일 카드로 탐색하고, 클릭하여 모달에서 사진 슬라이드와 영상을 감상하세요.</p>
+
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- 작은 카드: 숲 -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-forest" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/forest_thumb.jpg" alt="숲" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">숲</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: 바다, 산 -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-sea-mountain" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/seamountain_thumb.jpg" alt="바다, 산" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">바다, 산</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: 서(書) -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-seo" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/seo_thumb.jpg" alt="서(書)" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">서(書)</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: 가던길 -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-road" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/road_thumb.jpg" alt="가던길" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">가던길</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: 감포 앞 바다에서 -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-gampo" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/gampo_thumb.jpg" alt="감포 앞 바다에서" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">감포 앞 바다에서</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: 석풍수 -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-seokpungsoo" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/seokpungsoo_thumb.jpg" alt="석풍수" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">석풍수</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: PRAYER -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-prayer" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/prayer_thumb.jpg" alt="PRAYER" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">PRAYER</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: ISLAND -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-island" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/island_thumb.jpg" alt="ISLAND" class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">ISLAND</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+
+        <!-- 작은 카드: FROM HERE TO EVERYWHERE... -->
+        <article class="group border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition">
+          <button data-modal-target="modal-fhte" class="block text-left w-full">
+            <div class="relative">
+              <img src="assets/images/fhte_thumb.jpg" alt="FROM HERE TO EVERYWHERE..." class="w-full h-40 object-cover" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                <h3 class="text-sm font-medium">FROM HERE TO EVERYWHERE...</h3>
+              </div>
+            </div>
+          </button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== MODALS (인천 · 곡별 영상 + 사진 슬라이드) ====== -->
+  
+  <!-- Modal: 숲 -->
+  <div id="modal-forest" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="forest">
+            <div class="slider-item"><img src="assets/images/forest_1.jpg" class="w-full h-64 object-cover" alt="숲 1" /></div>
+            <div class="slider-item"><img src="assets/images/forest_2.jpg" class="w-full h-64 object-cover" alt="숲 2" /></div>
+            <div class="slider-item"><img src="assets/images/forest_3.jpg" class="w-full h-64 object-cover" alt="숲 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="forest">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="forest">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="forest" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_FOREST?enablejsapi=1&rel=0" title="숲 – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>숲에 들어설 때마다 나무들이 지키는 자리와 빛·바람·향기를 음악으로 비춘 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 바다, 산 -->
+  <div id="modal-sea-mountain" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="seamountain">
+            <div class="slider-item"><img src="assets/images/seamountain_1.jpg" class="w-full h-64 object-cover" alt="바다, 산 1" /></div>
+            <div class="slider-item"><img src="assets/images/seamountain_2.jpg" class="w-full h-64 object-cover" alt="바다, 산 2" /></div>
+            <div class="slider-item"><img src="assets/images/seamountain_3.jpg" class="w-full h-64 object-cover" alt="바다, 산 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="seamountain">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="seamountain">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="seamountain" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_SEAMOUNTAIN?enablejsapi=1&rel=0" title="바다, 산 – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>산행의 여정과 파도의 리듬에서 영감을 받은 두 곡을 연작으로 묶어 구성했습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 서(書) -->
+  <div id="modal-seo" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="seo">
+            <div class="slider-item"><img src="assets/images/seo_1.jpg" class="w-full h-64 object-cover" alt="서 1" /></div>
+            <div class="slider-item"><img src="assets/images/seo_2.jpg" class="w-full h-64 object-cover" alt="서 2" /></div>
+            <div class="slider-item"><img src="assets/images/seo_3.jpg" class="w-full h-64 object-cover" alt="서 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="seo">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="seo">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="seo" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_SEO?enablejsapi=1&rel=0" title="서(書) – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>서예의 호흡과 필선을 음악적으로 번역한 작품으로, 예술의전당 서예박물관 기획전 경험을 바탕으로 쓰였습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 가던길 -->
+  <div id="modal-road" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="road">
+            <div class="slider-item"><img src="assets/images/road_1.jpg" class="w-full h-64 object-cover" alt="가던길 1" /></div>
+            <div class="slider-item"><img src="assets/images/road_2.jpg" class="w-full h-64 object-cover" alt="가던길 2" /></div>
+            <div class="slider-item"><img src="assets/images/road_3.jpg" class="w-full h-64 object-cover" alt="가던길 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="road">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="road">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="road" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_ROAD?enablejsapi=1&rel=0" title="가던길 – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>나그네의 여정과 메나리조 선율의 변주로 구성된 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 감포 앞 바다에서 -->
+  <div id="modal-gampo" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="gampo">
+            <div class="slider-item"><img src="assets/images/gampo_1.jpg" class="w-full h-64 object-cover" alt="감포 앞 바다에서 1" /></div>
+            <div class="slider-item"><img src="assets/images/gampo_2.jpg" class="w-full h-64 object-cover" alt="감포 앞 바다에서 2" /></div>
+            <div class="slider-item"><img src="assets/images/gampo_3.jpg" class="w-full h-64 object-cover" alt="감포 앞 바다에서 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="gampo">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="gampo">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="gampo" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_GAMPO?enablejsapi=1&rel=0" title="감포 앞 바다에서 – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>문무대왕의 정신과 만파식적 설화에서 영감을 받은 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 석풍수 -->
+  <div id="modal-seokpungsoo" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="seokpungsoo">
+            <div class="slider-item"><img src="assets/images/seokpungsoo_1.jpg" class="w-full h-64 object-cover" alt="석풍수 1" /></div>
+            <div class="slider-item"><img src="assets/images/seokpungsoo_2.jpg" class="w-full h-64 object-cover" alt="석풍수 2" /></div>
+            <div class="slider-item"><img src="assets/images/seokpungsoo_3.jpg" class="w-full h-64 object-cover" alt="석풍수 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="seokpungsoo">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="seokpungsoo">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="seokpungsoo" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_SEOK?enablejsapi=1&rel=0" title="석풍수 – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>이타미 준의 제주 건축 〈석풍수〉에서 받은 인상을 음악으로 전환한 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: PRAYER -->
+  <div id="modal-prayer" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="prayer">
+            <div class="slider-item"><img src="assets/images/prayer_1.jpg" class="w-full h-64 object-cover" alt="PRAYER 1" /></div>
+            <div class="slider-item"><img src="assets/images/prayer_2.jpg" class="w-full h-64 object-cover" alt="PRAYER 2" /></div>
+            <div class="slider-item"><img src="assets/images/prayer_3.jpg" class="w-full h-64 object-cover" alt="PRAYER 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="prayer">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="prayer">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="prayer" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_PRAYER?enablejsapi=1&rel=0" title="PRAYER – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>혼란 속 모두를 위한 고요한 기도를 음악으로 구현한 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: ISLAND -->
+  <div id="modal-island" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="island">
+            <div class="slider-item"><img src="assets/images/island_1.jpg" class="w-full h-64 object-cover" alt="ISLAND 1" /></div>
+            <div class="slider-item"><img src="assets/images/island_2.jpg" class="w-full h-64 object-cover" alt="ISLAND 2" /></div>
+            <div class="slider-item"><img src="assets/images/island_3.jpg" class="w-full h-64 object-cover" alt="ISLAND 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="island">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="island">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="island" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_ISLAND?enablejsapi=1&rel=0" title="ISLAND – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>고립과 낯섦 속에서 발견하는 이해와 아름다움을 노래하는 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: FROM HERE TO EVERYWHERE... -->
+  <div id="modal-fhte" class="modal items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative">
+        <div class="relative">
+          <div class="slider-track" data-slider-track="fhte">
+            <div class="slider-item"><img src="assets/images/fhte_1.jpg" class="w-full h-64 object-cover" alt="FHtE 1" /></div>
+            <div class="slider-item"><img src="assets/images/fhte_2.jpg" class="w-full h-64 object-cover" alt="FHtE 2" /></div>
+            <div class="slider-item"><img src="assets/images/fhte_3.jpg" class="w-full h-64 object-cover" alt="FHtE 3" /></div>
+          </div>
+          <button class="absolute left-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-prev="fhte">◀</button>
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 rounded-xl bg-black/50 hover:bg-black/70" data-next="fhte">▶</button>
+        </div>
+        <div class="aspect-hero">
+          <iframe data-modal-player="fhte" class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_FHTE?enablejsapi=1&rel=0" title="FROM HERE TO EVERYWHERE… – video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <button class="absolute top-3 right-3 rounded-xl px-3 py-2 bg-black/60 hover:bg-black/80" data-close>닫기</button>
+      </div>
+      <div class="p-4 text-sm text-zinc-300">
+        <p>한 사람의 작은 소망이 바람을 타고 멀리 퍼져나가는 이미지를 음악으로 그린 작품입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <section id="poster" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl sm:text-3xl font-semibold">Poster & Gallery</h2>
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="assets/images/poster_main.jpg" target="_blank" class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
+          <img src="assets/images/poster_main.jpg" alt="Poster" class="w-full h-96 object-cover" />
+        </a>
+        <!-- 추가 이미지 -->
+        <a href="assets/images/gallery1.jpg" target="_blank" class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
+          <img src="assets/images/gallery1.jpg" alt="Gallery 1" class="w-full h-96 object-cover" />
+        </a>
+        <a href="assets/images/gallery2.jpg" target="_blank" class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
+          <img src="assets/images/gallery2.jpg" alt="Gallery 2" class="w-full h-96 object-cover" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PRESS (4번 섹션 – 미니멀 리스트: 제목 / 채널 / 날짜) ====== -->
+  <section id="press" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl sm:text-3xl font-semibold">Press</h2>
+      <ul class="mt-6 divide-y divide-white/10">
+        <!-- 항목 템플릿: a 태그 전체 클릭 이동, 카드 없음 / 미니멀 -->
+        <li>
+          <a href="https://news.example.com/article-1" target="_blank" class="block py-3 hover:bg-white/5 rounded-lg px-2">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span class="font-medium">“빛과 그림자의 경계, 몰입형 음악의 새로운 질감”</span>
+              <span class="text-sm text-zinc-400">The Culture Times · 2025-12-03</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="https://news.example.com/article-2" target="_blank" class="block py-3 hover:bg-white/5 rounded-lg px-2">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span class="font-medium">예술의전당 자유소극장 ‘그림자의 경계에서’ 리뷰</span>
+              <span class="text-sm text-zinc-400">Art & Sound · 2025-12-05</span>
+            </div>
+          </a>
+        </li>
+        <!-- 필요 시 계속 추가 -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====== CREDITS / FOOTER ====== -->
+  <footer class="py-10 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4 text-sm text-zinc-400">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div>© 2025 Fischerinsel Art Management</div>
+        <div class="space-x-4">
+          <a class="hover:text-white" href="#">Instagram</a>
+          <a class="hover:text-white" href="#">YouTube</a>
+          <a class="hover:text-white" href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script>
+        // Toggle chapters
+    const toggleChapters = document.getElementById('toggleChapters');
+    const chapters = document.getElementById('chapters');
+    if (toggleChapters && chapters) {
+      toggleChapters.addEventListener('click', () => {
+        chapters.classList.toggle('hidden');
+      });
+    }
+
+    // ===== Modal handling =====
+    const openModal = (id) => {
+      const m = document.getElementById(id);
+      if (!m) return;
+      m.classList.add('open');
+    };
+    const closeModal = (modalEl) => {
+      // 정리: 유튜브 플레이어 정지
+      const frame = modalEl.querySelector('iframe');
+      if (frame) {
+        frame.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'pauseVideo'}), '*');
+      }
+      modalEl.classList.remove('open');
+    };
+
+    // Open
+    document.querySelectorAll('[data-modal-target]')?.forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.getAttribute('data-modal-target')));
+    });
+    // Close buttons
+    document.querySelectorAll('.modal [data-close]')?.forEach(btn => {
+      btn.addEventListener('click', (e) => closeModal(e.target.closest('.modal')));
+    });
+    // Close on backdrop click
+    document.querySelectorAll('.modal')?.forEach(m => {
+      m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); });
+    });
+
+    // ===== Simple slider (per modal) =====
+    const sliderState = {};
+    const updateSlider = (n) => {
+      const track = document.querySelector(`[data-slider-track="${n}"]`);
+      if (!track) return;
+      const count = track.children.length;
+      sliderState[n] = (sliderState[n] ?? 0 + count) % count; // ensure exists
+      const idx = sliderState[n];
+      track.style.transform = `translateX(-${idx * 100}%)`;
+    };
+    document.querySelectorAll('[data-next]')?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const n = btn.getAttribute('data-next');
+        const track = document.querySelector(`[data-slider-track="${n}"]`);
+        if (!track) return;
+        const count = track.children.length;
+        sliderState[n] = ((sliderState[n] ?? 0) + 1) % count;
+        updateSlider(n);
+      });
+    });
+    document.querySelectorAll('[data-prev]')?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const n = btn.getAttribute('data-prev');
+        const track = document.querySelector(`[data-slider-track="${n}"]`);
+        if (!track) return;
+        const count = track.children.length;
+        sliderState[n] = ((sliderState[n] ?? 0) - 1 + count) % count;
+        updateSlider(n);
+      });
+    });
+
+    // Init all sliders at 0
+    document.querySelectorAll('[data-slider-track]')?.forEach(track => {
+      const n = track.getAttribute('data-slider-track');
+      sliderState[n] = 0; updateSlider(n);
+    });
+  </script>
+</body>
 </html>
