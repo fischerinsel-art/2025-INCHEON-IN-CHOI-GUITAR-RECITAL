@@ -60,6 +60,21 @@
 @media (prefers-reduced-motion: reduce){
   .hero-slides img{animation:none}
 }
+/* ===== Gallery(썸네일 자동 정사각) ===== */
+.thumb{
+  width:100%; aspect-ratio:1/1; object-fit:cover;
+  border-radius:12px; border:1px solid var(--line); background:#0b0b0f;
+  transition:transform .15s ease;
+}
+.thumb:hover{transform:scale(1.01)}
+.gl-row{margin-top:0.75rem; display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+@media(min-width:640px){ .gl-row{grid-template-columns:repeat(3,1fr);} }
+@media(min-width:1024px){ .gl-row{grid-template-columns:repeat(5,1fr);} }
+/* ===== Lightbox ===== */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:60}
+.lightbox.open{display:flex}
+.lightbox img{max-width:95vw;max-height:90vh;border-radius:10px}
+.lightbox button{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:8px;padding:8px 10px}
 
   </style>
 </head>
@@ -277,6 +292,27 @@
       </div>
     </div>
   </section>
+<section id="poster-gallery" class="py-16 border-t border-white/10">
+  <div class="mx-auto max-w-6xl px-4">
+    <h2 class="text-2xl sm:text-3xl font-semibold">Poster & Performance Images</h2>
+
+    <!-- Poster -->
+    <div class="mt-6">
+      <h3 class="text-lg font-medium text-zinc-200">Poster</h3>
+      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="./images/poster_main.webp" target="_blank" class="block border border-white/10 rounded-2xl overflow-hidden hover:border-white/30">
+          <img src="./images/poster.jpg" alt="Poster" class="w-full h-96 object-cover"/>
+        </a>
+      </div>
+    </div>
+
+    <!-- Performance Images per Track -->
+    <div id="perfGallery" class="mt-10 space-y-10"><!-- JS로 렌더링 --></div>
+    <p class="mt-2 text-sm text-zinc-400">
+      ※ 파일 구조: <code>archive/images/gallery/&lt;트랙ID&gt;/&lt;트랙ID&gt;_01.webp … _05.webp</code>
+    </p>
+  </div>
+</section>
 
   <!-- 보도(기사) 아카이브: 제목·출처·날짜 한 줄 (비워두고 나중에 추가) -->
   <section id="press" class="py-14 border-t border-white/10">
@@ -358,5 +394,65 @@
       });
     })();
   </script>
+  <script>
+  /* ===== Performance Images Gallery =====
+     - 트랙ID와 파일 규칙으로 자동 렌더링
+     - 파일 위치: archive/images/gallery/<id>/<id>_01.webp … _05.webp
+     - 확장자 변경 필요 시 IMG_EXT = "jpg" 로 수정
+  */
+  const IMG_EXT = "webp";
+  const TRACK_IDS = [
+    {id:"forest", title:"숲"},
+    {id:"seamountain", title:"바다, 산"},
+    {id:"seo", title:"서(書)"},
+    {id:"road", title:"가던길"},
+    {id:"gampo", title:"감포 앞 바다에서"},
+    {id:"seokpungsoo", title:"석풍수"},
+    {id:"prayer", title:"PRAYER"},
+    {id:"island", title:"ISLAND"},
+    {id:"fhte", title:"FROM HERE TO EVERYWHERE..."},
+  ];
+  const perfWrap = document.getElementById('perfGallery');
+
+  function renderGallery(){
+    if(!perfWrap) return;
+    perfWrap.innerHTML = "";
+    TRACK_IDS.forEach(tr=>{
+      const section = document.createElement('section');
+      section.innerHTML = `
+        <h3 class="text-lg font-medium text-zinc-200">${tr.title}</h3>
+        <div class="gl-row">
+          ${[1,2,3,4,5].map(n=>{
+            const num = String(n).padStart(2,'0');
+            const full = `./images/gallery/${tr.id}/${tr.id}_${num}.${IMG_EXT}`;
+            return `<img class="thumb" src="${full}" alt="${tr.title} ${num}" data-full="${full}" />`;
+          }).join("")}
+        </div>`;
+      perfWrap.appendChild(section);
+    });
+  }
+  renderGallery();
+</script>
+<script>
+  // 라이트박스 DOM 만들기
+  const lb = document.createElement('div');
+  lb.className = "lightbox";
+  lb.innerHTML = `<button aria-label="Close">닫기</button><img alt="full">`;
+  document.body.appendChild(lb);
+  const lbImg = lb.querySelector('img');
+  const lbBtn = lb.querySelector('button');
+  lbBtn.onclick = ()=> lb.classList.remove('open');
+  lb.addEventListener('click', (e)=>{ if(e.target===lb) lb.classList.remove('open'); });
+
+  // 썸네일 클릭 핸들러
+  document.addEventListener('click', (e)=>{
+    const t = e.target;
+    if(t instanceof HTMLImageElement && t.classList.contains('thumb')){
+      lbImg.src = t.dataset.full;
+      lb.classList.add('open');
+    }
+  });
+</script>
+
 </body>
 </html>
