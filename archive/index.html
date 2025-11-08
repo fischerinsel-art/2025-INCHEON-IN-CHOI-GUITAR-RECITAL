@@ -11,17 +11,16 @@
       font-family:"Helvetica Neue","Apple SD Gothic Neo",Helvetica,Arial,"Noto Sans KR",ui-sans-serif,system-ui;}
     a{color:#9ecbff;text-decoration:none} a:hover{text-decoration:underline}
 
-/* 비율 컨테이너: 반응형(최대 750px, 세로는 16:9 유지) */
+/* 비율 컨테이너: 반응형(가로는 브라우저 폭에 따라 자동 조정, 최대 750px, 세로는 16:9 유지) */
 .media {
   position: relative;
-  width: 100%;
-  max-width: 750px;       /* ✅ 최대 750px까지만 확대 */
-  aspect-ratio: var(--ratio, 16/9);  /* ✅ 세로는 원본비율(16:9) 유지 */
+  width: 100%;                   /* 브라우저 폭에 따라 자동 조정 */
+  max-width: 750px;              /* 최대 750px까지만 확대 */
+  aspect-ratio: var(--ratio, 16/9); /* 세로는 16:9 비율 유지 */
   background: #000;
   overflow: hidden;
   border-radius: 16px;
-  margin-left: auto;      /* ✅ 가운데 정렬용 */
-  margin-right: auto;     /* ✅ 가운데 정렬용 */
+  margin: 0 auto;                /* 가운데 정렬 */
 }
 
 .media > iframe,
