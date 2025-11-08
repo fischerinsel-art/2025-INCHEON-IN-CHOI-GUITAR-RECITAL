@@ -145,7 +145,9 @@ img { image-orientation: from-image; }
   </style>
 </head>
 <body class="antialiased selection:bg-white/20 selection:text-white">
-
+<body class="bg-black text-white">
+  <!-- ✅ 사이트 공통 래퍼 -->
+  <main class="site-wrap mx-auto w-full px-0 lg:px-8 max-w-[1200px]">
   <!-- 상단 네비 + 햄버거 + 언어토글 -->
   <header class="fixed top-0 inset-x-0 z-50 bg-black/60 backdrop-blur border-b border-white/10">
     <div class="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
@@ -579,7 +581,8 @@ img { image-orientation: from-image; }
       </ul>
     </div>
   </section>
-
+</main>
+</body>
   <footer class="py-10 border-t border-white/10 text-center text-zinc-400">
     © FISCHERINSEL ARTS · IN CHOI GUITAR RECITAL — From Here to Everywhere
   </footer>
