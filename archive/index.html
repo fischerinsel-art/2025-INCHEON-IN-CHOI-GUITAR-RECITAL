@@ -166,6 +166,21 @@ img { image-orientation: from-image; }
   text-align: right;
   flex: 1;
 }
+/* 저장 억제 */
+img.protect{
+  -webkit-user-drag:none; user-select:none; -webkit-touch-callout:none;
+}
+/* 썸네일 위 투명 레이어로 롱프레스 방지(모바일) */
+.protect-wrap{position:relative}
+.protect-wrap .no-save{position:absolute; inset:0;}
+/* 모바일에서 한 줄 유지 + 살짝 축소 */
+@media (max-width: 640px){
+  .title-fhte{
+    white-space: nowrap;
+    font-size: clamp(18px, 6.4vw, 22px); /* 화면에 맞춰 부드럽게 줄임 */
+    letter-spacing: .01em;               /* 자간 살짝 조정 */
+  }
+}
 
   </style>
 </head>
@@ -227,7 +242,10 @@ img { image-orientation: from-image; }
           style="font-family:'Helvetica Neue',Helvetica,Arial,'Noto Sans KR',ui-sans-serif;">
         <span class="block text-2xl sm:text-4xl md:text-5xl font-[650]">IN CHOI GUITAR RECITAL</span>
         <span class="block mt-2 text-2xl sm:text-4xl md:text-5xl font-[650]">MUSICSCAPE</span>
-        <span class="block mt-2 text-3xl sm:text-5xl md:text-6xl font-[750]">FROM HERE TO EVERYWHERE</span>
+      <span class="block mt-2 text-3xl sm:text-5xl md:text-6xl font-[750] title-fhte">
+  FROM HERE TO EVERYWHERE
+</span>
+
       </h1>
       <p class="mt-4 text-zinc-300 text-base sm:text-lg">인천중구문화회관 · 2025.10.25.</p>
       <div class="mt-6 flex items-center gap-3">
@@ -676,6 +694,27 @@ img { image-orientation: from-image; }
       });
     })();
   </script>
+  <script>
+// 우클릭/드래그 저장 억제
+document.addEventListener('contextmenu', e=>{
+  if(e.target.tagName==='IMG' && e.target.classList.contains('protect')) e.preventDefault();
+});
+document.addEventListener('dragstart', e=>{
+  if(e.target.tagName==='IMG' && e.target.classList.contains('protect')) e.preventDefault();
+});
+
+// 직접 파일 열림 금지: a[data-lightbox]는 라이트박스만 열리도록
+document.querySelectorAll('a[data-lightbox]').forEach(a=>{
+  a.removeAttribute('download'); // 혹시 붙어있다면 제거
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const href = a.getAttribute('href');
+    // ↑ 여기에 기존 라이트박스 오픈 함수 호출
+    // 예: openLightbox(href);
+  });
+});
+</script>
+
   <script>
   /* ===== Performance Images Gallery =====
      - 트랙ID와 파일 규칙으로 자동 렌더링
