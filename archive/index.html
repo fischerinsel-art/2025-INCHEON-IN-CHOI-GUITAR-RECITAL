@@ -141,6 +141,31 @@ img { image-orientation: from-image; }
 .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid rgba(255,255,255,.15); border-radius:9999px; line-height:1;}
 .pill svg{width:18px; height:18px; display:block; flex-shrink:0; vertical-align:middle;}
 .pill .icon{display:block; width:18px; height:18px; line-height:18px; text-align:center; flex-shrink:0;}
+/* Creative Team: 역할과 이름을 한 줄에 고정 */
+.team-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.team-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  padding: 10px 14px;
+}
+.team-role {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.team-name {
+  color: rgba(255,255,255,0.85);
+  text-align: right;
+  flex: 1;
+}
 
   </style>
 </head>
