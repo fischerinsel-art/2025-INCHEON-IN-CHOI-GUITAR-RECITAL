@@ -820,6 +820,42 @@ document.querySelectorAll('a[data-lightbox]').forEach(a=>{
 }, true);
 
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const trackList = document.querySelectorAll("#tracks-program aside button");
+  const detailPanel = document.querySelector("#track-detail");
+
+  // 모바일 전용: 각 트랙 바로 밑에 설명 추가
+  function renderMobileDescriptions() {
+    if (window.innerWidth < 1024) { // 모바일 조건
+      trackList.forEach(btn => {
+        const id = btn.dataset.track;
+        const panel = document.querySelector(`#panel-${id}`);
+        if (!panel) return;
+        // 이미 붙어 있으면 중복 방지
+        if (btn.nextElementSibling && btn.nextElementSibling.classList.contains("mobile-desc")) return;
+        const desc = panel.innerHTML;
+        const div = document.createElement("div");
+        div.className = "mobile-desc border border-white/10 rounded-xl p-3 mt-2 text-sm text-zinc-300 leading-relaxed";
+        div.innerHTML = desc;
+        btn.insertAdjacentElement("afterend", div);
+      });
+      // 오른쪽 전체 설명은 숨김
+      detailPanel.style.display = "none";
+    } else {
+      // 데스크톱에서는 mobile-desc 제거, 오른쪽 복원
+      document.querySelectorAll(".mobile-desc").forEach(e => e.remove());
+      detailPanel.style.display = "block";
+    }
+  }
+
+  renderMobileDescriptions();
+  window.addEventListener("resize", () => {
+    clearTimeout(window._resizeTimeout);
+    window._resizeTimeout = setTimeout(renderMobileDescriptions, 200);
+  });
+});
+</script>
 
 
 </body>
